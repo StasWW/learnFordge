@@ -1,0 +1,77 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    min-height: 50vh; /* Changed from fixed height to min-height */
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 1rem 2rem;
+
+    .headerText {
+        flex: 1 1 auto;
+        min-width: 0;
+
+        .companyName {
+            font-size: clamp(1rem, 7vw, 5rem);
+            font-weight: 600;
+            margin: 0;
+            text-wrap: wrap;
+            max-width: 700px;
+        }
+        .slogan {
+            font-size: 1rem;
+            font-weight: 400;
+            margin: 0;
+            color: #555;
+        }
+    }
+
+    img {
+        height: 50vh; /* Explicit height for desktop since parent is min-height */
+        aspect-ratio: 1.5 / 1;
+        object-fit: cover;
+        border-radius: 10%;
+        margin: 0;
+        flex-shrink: 0;
+    }
+}
+
+.feature {
+    height: 220px;
+    width: calc(100vw / 3);
+    border: var(--border) 1px solid;
+    border-radius: 8px;
+    h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Responsive: stack on narrow screens */
+@media (max-width: 900px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: auto; /* Allow header to grow to fit stacked content */
+        padding-bottom: 2rem; /* Add spacing at the bottom */
+
+        .headerText {
+            order: 2;
+            .companyName {
+                font-size: clamp(1rem, 3.5rem, 4rem);
+            }
+        }
+        img {
+            order: 1;
+            width: 100%;
+            height: auto; /* Reset fixed height */
+            aspect-ratio: 1.5/1;
+        }
+    }
+
+    .feature {
+        width: 90vw;
+    }
+}

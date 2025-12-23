@@ -1,0 +1,40 @@
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/Inter_18pt-Regular.ttf');
+    font-display: swap;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f8fafc;
+    --text: #0f172a;
+    --muted-text: #64748b;
+    --border: #e2e8f0;
+    --accent: #4f46e5;
+    --secondary: #0ea5e9;
+    --success: #10b981;
+
+    font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --text: #f1f5f9;
+    --muted-text: #94a3b8;
+    --border: #1e293b;
+    --accent: #818cf8;
+    --secondary: #38bdf8;
+    --success: #34d399;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    margin: 0;
+}
