@@ -1,13 +1,21 @@
+.landing-page {
+    background-color: var(--bg);
+    min-height: 100vh;
+}
+
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
     width: 100%;
-    min-height: 50vh; /* Changed from fixed height to min-height */
+    min-height: 50vh;
     margin: 0 auto;
     max-width: 1200px;
     padding: 1rem 2rem;
+
+    color: var(--text);
+    background-color: var(--bg);
 
     .headerText {
         flex: 1 1 auto;
@@ -19,17 +27,20 @@ header {
             margin: 0;
             text-wrap: wrap;
             max-width: 700px;
+
+            color: var(--text);
+            background-color: var(--bg);
         }
         .slogan {
             font-size: 1rem;
             font-weight: 400;
             margin: 0;
-            color: #555;
+            color: var(--muted-text);
         }
     }
 
     img {
-        height: 50vh; /* Explicit height for desktop since parent is min-height */
+        height: 50vh;
         aspect-ratio: 1.5 / 1;
         object-fit: cover;
         border-radius: 10%;
@@ -38,13 +49,70 @@ header {
     }
 }
 
-.feature {
-    height: 220px;
-    width: calc(100vw / 3);
-    border: var(--border) 1px solid;
-    border-radius: 8px;
-    h3 {
-        font-size: 1.5rem;
+.features-carousel {
+    margin-top: 2rem;
+    box-sizing: border-box;
+    display: flex;
+    width: 100vw;
+    overflow-x: auto;
+    flex-direction: row;
+    padding: 0 3rem;
+
+    .features-group {
+        gap: 2rem;
+        flex-direction: row;
+        display: flex;
+        padding-right: 2rem;
+        animation: spin 15s linear infinite;
+
+        .feature {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 1.5rem;
+            flex: 0 0 auto;
+            min-height: 200px;
+            border: var(--border) 1px solid;
+            background-color: var(--bg);
+            color: var(--text);
+            border-radius: 8px;
+            width: calc(100vw / 3 - 5rem);
+            flex-shrink: 0;
+            scroll-snap-align: center;
+
+            h3 {
+                font-size: 1.5rem;
+                margin: 1rem 0 0.5rem 0;
+            }
+            p {
+                margin: 0;
+            }
+        }
+    }
+}
+.features-carousel::-webkit-scrollbar {
+   display: none;
+}
+
+.features-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    button {
+        width: 3rem;
+        aspect-ratio: 1/1;
+        border: none;
+        background-color: var(--bg);
+        color: var(--text);
+        border-color: var(--border);
+        cursor: pointer;
+        padding: 0;
+
+        &.active {
+            border-radius: 50%;
+            background-color: #666;
+        }
     }
 }
 
@@ -54,8 +122,8 @@ header {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        height: auto; /* Allow header to grow to fit stacked content */
-        padding-bottom: 2rem; /* Add spacing at the bottom */
+        height: auto;
+        padding-bottom: 2rem;
 
         .headerText {
             order: 2;
@@ -66,12 +134,20 @@ header {
         img {
             order: 1;
             width: 100%;
-            height: auto; /* Reset fixed height */
+            height: auto;
             aspect-ratio: 1.5/1;
         }
     }
 
-    .feature {
-        width: 90vw;
+    .features-carousel {
+        .feature {
+            width: 85vw;
+            padding: 1.5rem;
+        }
     }
+}
+
+@keyframes spin {
+    from { translate: 0; }
+    to { translate: -100%; }
 }

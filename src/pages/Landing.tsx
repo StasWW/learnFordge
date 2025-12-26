@@ -4,10 +4,10 @@ import FeaturesCarousel from "../components/landing/FeaturesCarousel.tsx";
 
 export default function Landing() {
   return (
-    <>
+    <div className="landing-page">
       <Header />
       <FeaturesCarousel />
-    </>
+    </div>
   )
 }
 
