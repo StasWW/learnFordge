@@ -1,5 +1,5 @@
 import type {JSX} from "react";
-import type {IconProps} from "../../../types/landingTypes.ts";
+import type { IconProps } from "../../../types/commonTypes";
 import { IconBackground } from "../IconBackground";
 
 export function CloudIcon({

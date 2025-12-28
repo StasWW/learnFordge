@@ -55,11 +55,13 @@
 :root {
     --bg: #f8fafc;
     --text: #0f172a;
+    --alt-text: #ffffff;
     --muted-text: #64748b;
     --border: #e2e8f0;
     --accent: #4f46e5;
     --secondary: #0ea5e9;
     --success: #10b981;
+    --danger: #ef4444;
 
     font-family: 'Montserrat', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }

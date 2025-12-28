@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import Landing from './pages/Landing.tsx'
-import Lessons from "./pages/Lessons.tsx";
+import LessonsMainPage from "./pages/Lessons/LessonsMainPage.tsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 if (window.matchMedia &&
@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/Lessons" element={<Lessons />} />
+        <Route path="/Lessons" element={<LessonsMainPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
