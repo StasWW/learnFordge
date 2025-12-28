@@ -17,13 +17,14 @@
 
     main {
         box-sizing: border-box;
-
         margin: 0 auto;
         padding: 1.5rem;
-        max-width: 1000px;
+        width: min(100%, 1000px);
 
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
         .placeholderText {
             color: var(--muted-text);
@@ -38,7 +39,7 @@
             color: var(--alt-text);
             background-color: var(--accent);
             border: none;
-            border-radius: 6px;
+            border-radius: 100px;
             cursor: pointer;
             transition: background-color 0.2s ease;
 

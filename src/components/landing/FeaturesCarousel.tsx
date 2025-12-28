@@ -1,6 +1,6 @@
 import React from "react";
 import { CloudIcon } from "../../assets/images/featureIcons/CloudIcon";
-import type { featureProps } from "../../types/landingTypes";
+import type { featureProps } from "../../types/landingTypes.ts";
 import {AnalyticsIcon} from "../../assets/images/featureIcons/AnalyticsIcon";
 import {LessonsIcon} from "../../assets/images/featureIcons/LessonsIcon";
 import {VideoMeetingIcon} from "../../assets/images/featureIcons/VideoMeetingIcon";

@@ -1,5 +1,5 @@
 import type {JSX} from "react";
-import type { IconProps } from "../../../types/commonTypes";
+import type { IconProps } from "../../../types/commonTypes.ts";
 import { IconBackground } from "../IconBackground";
 
 export function LessonsIcon({

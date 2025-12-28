@@ -1,6 +1,6 @@
 import type {lessonObject} from "../../types/lessonTypes.ts";
 import LessonItemIcon from "../../assets/images/LessonItemIcon.tsx";
-import "../../styles/pages/Lessons/lessonItem.css";
+import "../../styles/pages/Lessons/components/lessonItem.css";
 
 export function LessonItem({ id, title, isEditable, handleEdit }: lessonObject & { isEditable?: boolean, handleEdit: (id: number | string) => void }) {
   return (
