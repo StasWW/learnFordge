@@ -3,49 +3,49 @@
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 200;
-  src: url('src/assets/fonts/montserrat-v31-cyrillic_latin-200.woff2') format('woff2');
+  src: url('../assets/fonts/montserrat-v31-cyrillic_latin-200.woff2') format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 300;
-  src: url('src/assets/fonts/montserrat-v31-cyrillic_latin-300.woff2') format('woff2');
+  src: url('../assets/fonts/montserrat-v31-cyrillic_latin-300.woff2') format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 500;
-  src: url('src/assets/fonts/montserrat-v31-cyrillic_latin-500.woff2') format('woff2');
+  src: url('../assets/fonts/montserrat-v31-cyrillic_latin-500.woff2') format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 600;
-  src: url('src/assets/fonts/montserrat-v31-cyrillic_latin-600.woff2') format('woff2');
+  src: url('../assets/fonts/montserrat-v31-cyrillic_latin-600.woff2') format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 700;
-  src: url('src/assets/fonts/montserrat-v31-cyrillic_latin-700.woff2') format('woff2');
+  src: url('../assets/fonts/montserrat-v31-cyrillic_latin-700.woff2') format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Montserrat';
   font-style: italic;
   font-weight: 700;
-  src: url('src/assets/fonts/montserrat-v31-cyrillic_latin-700italic.woff2') format('woff2');
+  src: url('../assets/fonts/montserrat-v31-cyrillic_latin-700italic.woff2') format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 900;
-  src: url('src/assets/fonts/montserrat-v31-cyrillic_latin-900.woff2') format('woff2');
+  src: url('../assets/fonts/montserrat-v31-cyrillic_latin-900.woff2') format('woff2');
 }
 
 * {
@@ -53,18 +53,32 @@
 }
 
 :root {
-    --bg: #f8fafc;
-    --text: #0f172a;
-    --muted-text: #64748b;
-    --border: #e2e8f0;
-    --accent: #4f46e5;
-    --secondary: #0ea5e9;
-    --success: #10b981;
+    --bg: #050912;
+    --text: #e7f2ff;
+    --muted-text: #a7b6cf;
+    --border: #1b2740;
+    --accent: #7cf7d2;
+    --secondary: #6cbaff;
+    --success: #c7f36d;
+
+    /* Glass / Liquid Glass tokens */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-bg-strong: rgba(10, 16, 28, 0.76);
+    --glass-bg-hover: rgba(14, 22, 36, 0.86);
+    --glass-border: rgba(124, 247, 210, 0.18);
+    --glass-border-strong: rgba(108, 186, 255, 0.24);
+    --glass-shadow: 0 26px 90px rgba(2, 8, 20, 0.55);
+    --glass-shadow-hover: 0 36px 120px rgba(4, 10, 24, 0.64);
+    --blur-amount: 22px;
+    --gradient-accent: linear-gradient(135deg, rgba(124, 247, 210, 0.16) 0%, rgba(108, 186, 255, 0.2) 50%, rgba(199, 243, 109, 0.18) 100%);
+    --gradient-glow: radial-gradient(circle at 18% 18%, rgba(124, 247, 210, 0.34), transparent 36%), radial-gradient(circle at 78% 10%, rgba(108, 186, 255, 0.3), transparent 34%), radial-gradient(circle at 35% 78%, rgba(199, 243, 109, 0.26), transparent 36%);
+    --page-gradient: radial-gradient(120% 120% at 10% 12%, rgba(124, 247, 210, 0.12), transparent 42%), radial-gradient(120% 120% at 82% 0%, rgba(108, 186, 255, 0.12), transparent 44%), linear-gradient(180deg, #050912 0%, #0c1526 55%, #091223 100%);
 
     font-family: 'Montserrat', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 body, #id {
+    background: var(--page-gradient), var(--bg);
     background-color: var(--bg);
     color: var(--text);
     min-height: 100vh;
