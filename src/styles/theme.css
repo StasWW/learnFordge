@@ -53,6 +53,31 @@
 }
 
 :root {
+    --bg: #f8fafc;
+    --text: #0f1419;
+    --muted-text: #536471;
+    --border: #e1e8ed;
+    --accent: #0d9488;
+    --secondary: #0284c7;
+    --success: #65a30d;
+    --selected: rgba(13, 148, 136, 0.15);
+
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-bg-strong: rgba(248, 250, 252, 0.95);
+    --glass-bg-hover: rgba(241, 245, 249, 0.98);
+    --glass-border: rgba(13, 148, 136, 0.2);
+    --glass-border-strong: rgba(2, 132, 199, 0.25);
+    --glass-shadow: 0 26px 90px rgba(15, 23, 42, 0.08);
+    --glass-shadow-hover: 0 36px 120px rgba(15, 23, 42, 0.12);
+    --blur-amount: 18px;
+    --gradient-accent: linear-gradient(135deg, rgba(13, 148, 136, 0.12) 0%, rgba(2, 132, 199, 0.15) 50%, rgba(101, 163, 13, 0.12) 100%);
+    --gradient-glow: radial-gradient(circle at 18% 18%, rgba(13, 148, 136, 0.2), transparent 36%), radial-gradient(circle at 78% 10%, rgba(2, 132, 199, 0.18), transparent 34%), radial-gradient(circle at 35% 78%, rgba(101, 163, 13, 0.16), transparent 36%);
+    --page-gradient: radial-gradient(120% 120% at 10% 12%, rgba(13, 148, 136, 0.06), transparent 42%), radial-gradient(120% 120% at 82% 0%, rgba(2, 132, 199, 0.06), transparent 44%);
+
+    font-family: 'Montserrat', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+[data-theme="dark"] {
     --bg: #050912;
     --text: #e7f2ff;
     --muted-text: #a7b6cf;
@@ -60,8 +85,8 @@
     --accent: #7cf7d2;
     --secondary: #6cbaff;
     --success: #c7f36d;
+    --selected: rgba(124, 247, 210, 0.25);
 
-    /* Glass / Liquid Glass tokens */
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-bg-strong: rgba(10, 16, 28, 0.76);
     --glass-bg-hover: rgba(14, 22, 36, 0.86);
@@ -72,9 +97,32 @@
     --blur-amount: 22px;
     --gradient-accent: linear-gradient(135deg, rgba(124, 247, 210, 0.16) 0%, rgba(108, 186, 255, 0.2) 50%, rgba(199, 243, 109, 0.18) 100%);
     --gradient-glow: radial-gradient(circle at 18% 18%, rgba(124, 247, 210, 0.34), transparent 36%), radial-gradient(circle at 78% 10%, rgba(108, 186, 255, 0.3), transparent 34%), radial-gradient(circle at 35% 78%, rgba(199, 243, 109, 0.26), transparent 36%);
-    --page-gradient: radial-gradient(120% 120% at 10% 12%, rgba(124, 247, 210, 0.12), transparent 42%), radial-gradient(120% 120% at 82% 0%, rgba(108, 186, 255, 0.12), transparent 44%), linear-gradient(180deg, #050912 0%, #0c1526 55%, #091223 100%);
+    --page-gradient: radial-gradient(120% 120% at 10% 12%, rgba(124, 247, 210, 0.12), transparent 42%), radial-gradient(120% 120% at 82% 0%, rgba(108, 186, 255, 0.12), transparent 44%);
+}
 
-    font-family: 'Montserrat', system-ui, Avenir, Helvetica, Arial, sans-serif;
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #050912;
+        --text: #e7f2ff;
+        --muted-text: #a7b6cf;
+        --border: #1b2740;
+        --accent: #7cf7d2;
+        --secondary: #6cbaff;
+        --success: #c7f36d;
+        --selected: rgba(124, 247, 210, 0.25);
+
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-bg-strong: rgba(10, 16, 28, 0.76);
+        --glass-bg-hover: rgba(14, 22, 36, 0.86);
+        --glass-border: rgba(124, 247, 210, 0.18);
+        --glass-border-strong: rgba(108, 186, 255, 0.24);
+        --glass-shadow: 0 26px 90px rgba(2, 8, 20, 0.55);
+        --glass-shadow-hover: 0 36px 120px rgba(4, 10, 24, 0.64);
+        --blur-amount: 22px;
+        --gradient-accent: linear-gradient(135deg, rgba(124, 247, 210, 0.16) 0%, rgba(108, 186, 255, 0.2) 50%, rgba(199, 243, 109, 0.18) 100%);
+        --gradient-glow: radial-gradient(circle at 18% 18%, rgba(124, 247, 210, 0.34), transparent 36%), radial-gradient(circle at 78% 10%, rgba(108, 186, 255, 0.3), transparent 34%), radial-gradient(circle at 35% 78%, rgba(199, 243, 109, 0.26), transparent 36%);
+        --page-gradient: radial-gradient(120% 120% at 10% 12%, rgba(124, 247, 210, 0.12), transparent 42%), radial-gradient(120% 120% at 82% 0%, rgba(108, 186, 255, 0.12), transparent 44%);
+    }
 }
 
 body, #id {
@@ -82,5 +130,4 @@ body, #id {
     background-color: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    margin: 0;
 }
