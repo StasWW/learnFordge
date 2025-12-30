@@ -79,27 +79,24 @@ export default function formatText(editor: LexicalEditor, event: string) {
     "superscript", "lowercase", "uppercase", "capitalize"]);
   const alignCommands = new Set(['left', 'right', 'center', 'start', 'end', 'justify']);
 
-  if (event === 'undo') {
-    editor.dispatchCommand(UNDO_COMMAND, undefined);
-  } else if (event === 'redo') {
-    editor.dispatchCommand(REDO_COMMAND, undefined);
+  const commandHandlers: Record<string, () => void> = {
+    undo: () => editor.dispatchCommand(UNDO_COMMAND, undefined),
+    redo: () => editor.dispatchCommand(REDO_COMMAND, undefined),
+    paragraph: formatParagraph,
+    h1: formatLargeHeading,
+    h2: formatSmallHeading,
+    ul: formatBulletList,
+    ol: formatNumberedList,
+    quote: formatQuote,
+    link: insertLink,
+  };
+
+  const handler = commandHandlers[event];
+  if (handler) {
+    handler();
   } else if (formatTextCommands.has(event)) {
     editor.dispatchCommand(FORMAT_TEXT_COMMAND, event as TextFormatType);
   } else if (alignCommands.has(event)) {
     editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, event as ElementFormatType);
-  } else if (event === 'paragraph') {
-    formatParagraph();
-  } else if (event === 'h1') {
-    formatLargeHeading();
-  } else if (event === 'h2') {
-    formatSmallHeading();
-  } else if (event === 'ul') {
-    formatBulletList();
-  } else if (event === 'ol') {
-    formatNumberedList();
-  } else if (event === 'quote') {
-    formatQuote();
-  } else if (event === 'link') {
-    insertLink();
   }
 }
