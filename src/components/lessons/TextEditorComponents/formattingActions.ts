@@ -100,7 +100,7 @@ export default function formatText(
     ul: formatBulletList,
     ol: formatNumberedList,
     quote: formatQuote,
-    link: insertLink,
+    formatInsertLink: insertLink, //TODO: add a prompt for URL
     insertImage: insertImage,
   };
 

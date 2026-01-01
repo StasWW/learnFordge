@@ -32,6 +32,7 @@ export default function Toolbar() {
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
+  const [isCode, setIsCode] = useState(false);
   const [isLink, setIsLink] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
@@ -71,6 +72,7 @@ export default function Toolbar() {
       setIsItalic(selection.hasFormat("italic"));
       setIsUnderline(selection.hasFormat("underline"));
       setIsStrikethrough(selection.hasFormat("strikethrough"));
+      setIsCode(selection.hasFormat("code"));
 
       const node = getSelectedNode(selection);
       const parent = node.getParent();
@@ -134,11 +136,10 @@ export default function Toolbar() {
       <div className="toolbar">
         <DefaultButton button={plugins.undo} action={handlePluginClick} disabled={!canUndo}/>
         <DefaultButton button={plugins.redo} action={handlePluginClick} disabled={!canRedo}/>
-        <Dropdown buttons={[plugins.paragraph, plugins.h1, plugins.h2]} action={handlePluginClick} selected={blockType}/>
-        <DefaultButton button={plugins.bulletList} action={handlePluginClick} active={blockType === "ul"}/>
-        <DefaultButton button={plugins.numberedList} action={handlePluginClick} active={blockType === "ol"}/>
-        <DefaultButton button={plugins.quote} action={handlePluginClick} active={blockType === "quote"}/>
-        <DefaultButton button={plugins.code} action={handlePluginClick}/> {/* FIXME: Fix a bug, add active property */}
+        <Dropdown buttons={[plugins.paragraph, plugins.h1, plugins.h2, plugins.quote]} action={handlePluginClick} selected={blockType}/>
+        <DefaultButton button={plugins.bulletList} action={handlePluginClick} active={blockType === "bullet"}/>
+        <DefaultButton button={plugins.numberedList} action={handlePluginClick} active={blockType === "number"}/>
+        <DefaultButton button={plugins.code} action={handlePluginClick} active={isCode}/>
         <DefaultButton button={plugins.bold} action={handlePluginClick} active={isBold}/>
         <DefaultButton button={plugins.italic} action={handlePluginClick} active={isItalic}/>
         <DefaultButton button={plugins.underline} action={handlePluginClick} active={isUnderline}/>
