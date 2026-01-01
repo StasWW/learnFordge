@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/Lessons" element={<LessonsMainPage />} />
-          <Route path='/Lessons/:lessonId' element={<LessonIdPage />} />
+        <Route path='/Lessons/:lessonId' element={<LessonIdPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

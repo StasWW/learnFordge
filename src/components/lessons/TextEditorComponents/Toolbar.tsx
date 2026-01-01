@@ -138,7 +138,7 @@ export default function Toolbar() {
         <DefaultButton button={plugins.bulletList} action={handlePluginClick} active={blockType === "ul"}/>
         <DefaultButton button={plugins.numberedList} action={handlePluginClick} active={blockType === "ol"}/>
         <DefaultButton button={plugins.quote} action={handlePluginClick} active={blockType === "quote"}/>
-        <DefaultButton button={plugins.code} action={handlePluginClick}/>
+        <DefaultButton button={plugins.code} action={handlePluginClick}/> {/* FIXME: Fix a bug, add active property */}
         <DefaultButton button={plugins.bold} action={handlePluginClick} active={isBold}/>
         <DefaultButton button={plugins.italic} action={handlePluginClick} active={isItalic}/>
         <DefaultButton button={plugins.underline} action={handlePluginClick} active={isUnderline}/>
