@@ -19,6 +19,7 @@ import {$isAtNodeEnd} from "@lexical/selection";
 import {$getNearestNodeOfType} from "@lexical/utils";
 import {$isListNode, ListNode} from "@lexical/list";
 import {$isHeadingNode} from "@lexical/rich-text";
+import InsertImageModal from "./InsertImageModal.tsx";
 
 export default function Toolbar() {
   const [editor] = useLexicalComposerContext();
@@ -32,9 +33,10 @@ export default function Toolbar() {
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isLink, setIsLink] = useState(false);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   const handlePluginClick = (event: string) => {
-    formatText(editor, event);
+    formatText(editor, event, () => setIsImageModalOpen(true));
   }
 
   const updateToolbar = useCallback(() => {
@@ -128,22 +130,28 @@ export default function Toolbar() {
   }, [editor, updateToolbar]);
 
   return (
-    <div className="toolbar">
-      <DefaultButton button={plugins.undo} action={handlePluginClick} disabled={!canUndo}/>
-      <DefaultButton button={plugins.redo} action={handlePluginClick} disabled={!canRedo}/>
-      <Dropdown buttons={[plugins.paragraph, plugins.h1, plugins.h2]} action={handlePluginClick} selected={blockType}/>
-      <DefaultButton button={plugins.bulletList} action={handlePluginClick} active={blockType === "ul"}/>
-      <DefaultButton button={plugins.numberedList} action={handlePluginClick} active={blockType === "ol"}/>
-      <DefaultButton button={plugins.quote} action={handlePluginClick} active={blockType === "quote"}/>
-      <DefaultButton button={plugins.code} action={handlePluginClick}/>
-      <DefaultButton button={plugins.bold} action={handlePluginClick} active={isBold}/>
-      <DefaultButton button={plugins.italic} action={handlePluginClick} active={isItalic}/>
-      <DefaultButton button={plugins.underline} action={handlePluginClick} active={isUnderline}/>
-      <DefaultButton button={plugins.strikethrough} action={handlePluginClick} active={isStrikethrough}/>
-      <DefaultButton button={plugins.link} action={handlePluginClick} active={isLink}/>
-      <Dropdown buttons={[plugins.alignLeft, plugins.alignCenter, plugins.alignRight]} action={handlePluginClick}/>
-      <DefaultButton button={plugins.image} action={handlePluginClick}/>
-    </div>
+    <>
+      <div className="toolbar">
+        <DefaultButton button={plugins.undo} action={handlePluginClick} disabled={!canUndo}/>
+        <DefaultButton button={plugins.redo} action={handlePluginClick} disabled={!canRedo}/>
+        <Dropdown buttons={[plugins.paragraph, plugins.h1, plugins.h2]} action={handlePluginClick} selected={blockType}/>
+        <DefaultButton button={plugins.bulletList} action={handlePluginClick} active={blockType === "ul"}/>
+        <DefaultButton button={plugins.numberedList} action={handlePluginClick} active={blockType === "ol"}/>
+        <DefaultButton button={plugins.quote} action={handlePluginClick} active={blockType === "quote"}/>
+        <DefaultButton button={plugins.code} action={handlePluginClick}/>
+        <DefaultButton button={plugins.bold} action={handlePluginClick} active={isBold}/>
+        <DefaultButton button={plugins.italic} action={handlePluginClick} active={isItalic}/>
+        <DefaultButton button={plugins.underline} action={handlePluginClick} active={isUnderline}/>
+        <DefaultButton button={plugins.strikethrough} action={handlePluginClick} active={isStrikethrough}/>
+        <DefaultButton button={plugins.link} action={handlePluginClick} active={isLink}/>
+        <Dropdown buttons={[plugins.alignLeft, plugins.alignCenter, plugins.alignRight]} action={handlePluginClick}/>
+        <DefaultButton button={plugins.image} action={handlePluginClick}/>
+      </div>
+      {isImageModalOpen && (
+        <InsertImageModal
+          onClose={() => setIsImageModalOpen(false)}
+        />
+      )}
+    </>
   )
 }
-

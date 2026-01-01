@@ -13,6 +13,7 @@ import {CodeNode} from "@lexical/code";
 import Toolbar from "./TextEditorComponents/Toolbar.tsx";
 import lexicalEditorTheme from "./TextEditorComponents/lexicalEditorTheme.ts";
 import '../../styles/pages/Lessons/components/lexicalEditorTheme.css'
+import { ImageNode } from "../../nodes/ImageNode";
 
 export default function TextEditor () {
   const initialConfig = {
@@ -26,6 +27,7 @@ export default function TextEditor () {
       LinkNode,
       AutoLinkNode,
       CodeNode,
+      ImageNode,
     ],
     onError: (error: Error) => console.warn(error)
   }

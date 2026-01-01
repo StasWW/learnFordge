@@ -21,7 +21,11 @@ import {
 import { TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $wrapNodes } from "@lexical/selection";
 
-export default function formatText(editor: LexicalEditor, event: string) {
+export default function formatText(
+  editor: LexicalEditor,
+  event: string,
+  onOpenImageModal: () => void
+) {
   const insertLink = () => {
     editor.dispatchCommand(TOGGLE_LINK_COMMAND, "https://");
   };
@@ -74,6 +78,14 @@ export default function formatText(editor: LexicalEditor, event: string) {
     });
   };
 
+  const insertImage = () => {
+    console.log('1')
+    if (onOpenImageModal) {
+      console.log('2')
+      onOpenImageModal();
+    }
+  }
+
   const formatTextCommands = new Set(["bold", "underline", "strikethrough",
     "italic", "highlight", "code", "subscript",
     "superscript", "lowercase", "uppercase", "capitalize"]);
@@ -89,6 +101,7 @@ export default function formatText(editor: LexicalEditor, event: string) {
     ol: formatNumberedList,
     quote: formatQuote,
     link: insertLink,
+    insertImage: insertImage,
   };
 
   const handler = commandHandlers[event];
