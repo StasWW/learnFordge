@@ -1,4 +1,4 @@
-/* Toolbar */
+
 .toolbar {
   display: flex;
   gap: 4px;
@@ -10,7 +10,6 @@
   flex-wrap: wrap;
 }
 
-/* Toolbar Buttons */
 .toolbar-button {
   display: inline-flex;
   align-items: center;

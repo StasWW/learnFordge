@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import pluginsList from "../toolbarButtons.ts";
 import '../../../../styles/pages/Lessons/components/textEditor.css';
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
@@ -20,6 +21,7 @@ import {$getNearestNodeOfType} from "@lexical/utils";
 import {$isListNode, ListNode} from "@lexical/list";
 import {$isHeadingNode} from "@lexical/rich-text";
 import InsertImageModal from "./InsertImageModal.tsx";
+import FloatingLinkEditor from "./FloatingLinkEditor.tsx";
 
 export default function Toolbar() {
   const [editor] = useLexicalComposerContext();
@@ -56,7 +58,6 @@ export default function Toolbar() {
         return $isAtNodeEnd(anchor) ? focusNode : anchorNode;
       }
     }
-
 
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -144,7 +145,7 @@ export default function Toolbar() {
         <DefaultButton button={plugins.italic} action={handlePluginClick} active={isItalic}/>
         <DefaultButton button={plugins.underline} action={handlePluginClick} active={isUnderline}/>
         <DefaultButton button={plugins.strikethrough} action={handlePluginClick} active={isStrikethrough}/>
-        <DefaultButton button={plugins.link} action={handlePluginClick} />
+        <DefaultButton button={plugins.link} action={handlePluginClick} active={isLink} />
         <Dropdown buttons={[plugins.alignLeft, plugins.alignCenter, plugins.alignRight]} action={handlePluginClick}/>
         <DefaultButton button={plugins.image} action={handlePluginClick}/>
       </div>
@@ -152,6 +153,10 @@ export default function Toolbar() {
         <InsertImageModal
           onClose={() => setIsImageModalOpen(false)}
         />
+      )}
+      {isLink && createPortal(
+        <FloatingLinkEditor editor={editor} />,
+        document.body
       )}
     </>
   )

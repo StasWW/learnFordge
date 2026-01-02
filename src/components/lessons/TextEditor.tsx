@@ -12,9 +12,9 @@ import {LinkNode, AutoLinkNode} from "@lexical/link";
 import {CodeNode} from "@lexical/code";
 import Toolbar from "./TextEditorComponents/helperComponents/Toolbar.tsx";
 import lexicalEditorTheme from "./TextEditorComponents/lexicalEditorTheme.ts";
-import '../../styles/pages/Lessons/components/lexicalEditorTheme.css'
 import { ImageNode } from "./TextEditorComponents/nodes/ImageNode";
 import ImagesPlugin from "./TextEditorComponents/plugins/ImagesPlugin.tsx";
+import '../../styles/pages/Lessons/components/lexicalEditorTheme.css'
 
 export default function TextEditor () {
   const initialConfig = {
@@ -30,7 +30,7 @@ export default function TextEditor () {
       CodeNode,
       ImageNode,
     ],
-    onError: (error: Error) => console.warn(error)
+    onError: (error: Error) => console.warn(error),
   }
 
   return (
