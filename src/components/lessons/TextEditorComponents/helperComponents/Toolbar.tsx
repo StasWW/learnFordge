@@ -1,9 +1,9 @@
-import pluginsList from "./toolbarButtons.ts";
-import '../../../styles/pages/Lessons/components/textEditor.css';
+import pluginsList from "../toolbarButtons.ts";
+import '../../../../styles/pages/Lessons/components/textEditor.css';
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import DefaultButton from "./ToolbarDefaultButton.tsx";
 import Dropdown from "./ToolbarDropdown.tsx";
-import formatText from "./formattingActions.ts";
+import formatText from "../formattingActions.ts";
 import {useCallback, useEffect, useState} from "react";
 import { mergeRegister } from "@lexical/utils";
 import {
@@ -144,7 +144,7 @@ export default function Toolbar() {
         <DefaultButton button={plugins.italic} action={handlePluginClick} active={isItalic}/>
         <DefaultButton button={plugins.underline} action={handlePluginClick} active={isUnderline}/>
         <DefaultButton button={plugins.strikethrough} action={handlePluginClick} active={isStrikethrough}/>
-        <DefaultButton button={plugins.link} action={handlePluginClick} active={isLink}/>
+        <DefaultButton button={plugins.link} action={handlePluginClick} />
         <Dropdown buttons={[plugins.alignLeft, plugins.alignCenter, plugins.alignRight]} action={handlePluginClick}/>
         <DefaultButton button={plugins.image} action={handlePluginClick}/>
       </div>

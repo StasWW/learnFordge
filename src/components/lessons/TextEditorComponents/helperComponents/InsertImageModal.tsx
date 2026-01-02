@@ -1,9 +1,9 @@
-import {Modal} from "../../common/Modal.tsx";
+import {Modal} from "../../../common/Modal.tsx";
 import React, {useState} from "react";
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import {$getSelection, $insertNodes, $isRangeSelection} from "lexical";
-import {$createImageNode} from "../../../nodes/ImageNode";
-import '../../../styles/pages/Lessons/components/insertImageModal.css';
+import {$createImageNode} from "../nodes/ImageNode.tsx";
+import '../../../../styles/pages/Lessons/components/insertImageModal.css';
 
 export default function InsertImageModal({onClose}: {onClose: () => void}) {
   const [editor] = useLexicalComposerContext();
@@ -111,7 +111,7 @@ export default function InsertImageModal({onClose}: {onClose: () => void}) {
             onChange={handleAddImg}
             onClick={(e) => e.stopPropagation()}
           />
-          <span>Перетащите сюда файл</span>
+          <span>Перетащите или нажмите</span >
         </div>
       </div>
     </Modal>

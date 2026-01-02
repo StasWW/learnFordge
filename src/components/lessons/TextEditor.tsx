@@ -10,10 +10,11 @@ import {HeadingNode, QuoteNode} from "@lexical/rich-text";
 import {ListNode, ListItemNode} from "@lexical/list";
 import {LinkNode, AutoLinkNode} from "@lexical/link";
 import {CodeNode} from "@lexical/code";
-import Toolbar from "./TextEditorComponents/Toolbar.tsx";
+import Toolbar from "./TextEditorComponents/helperComponents/Toolbar.tsx";
 import lexicalEditorTheme from "./TextEditorComponents/lexicalEditorTheme.ts";
 import '../../styles/pages/Lessons/components/lexicalEditorTheme.css'
-import { ImageNode } from "../../nodes/ImageNode";
+import { ImageNode } from "./TextEditorComponents/nodes/ImageNode";
+import ImagesPlugin from "./TextEditorComponents/plugins/ImagesPlugin.tsx";
 
 export default function TextEditor () {
   const initialConfig = {
@@ -43,6 +44,7 @@ export default function TextEditor () {
       <HistoryPlugin />
       <ListPlugin />
       <LinkPlugin />
+      <ImagesPlugin />
     </LexicalComposer>
   )
 }

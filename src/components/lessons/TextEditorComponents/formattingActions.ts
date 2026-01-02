@@ -79,9 +79,7 @@ export default function formatText(
   };
 
   const insertImage = () => {
-    console.log('1')
     if (onOpenImageModal) {
-      console.log('2')
       onOpenImageModal();
     }
   }

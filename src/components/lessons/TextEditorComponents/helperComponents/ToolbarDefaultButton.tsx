@@ -1,4 +1,4 @@
-import type {PluginItem} from "../../../types/lessonTypes.ts";
+import type {PluginItem} from "../../../../types/lessonTypes.ts";
 
 export default function DefaultButton({
   button,

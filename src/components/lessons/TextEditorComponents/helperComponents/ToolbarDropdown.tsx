@@ -1,4 +1,4 @@
-import type {PluginItem} from "../../../types/lessonTypes.ts";
+import type {PluginItem} from "../../../../types/lessonTypes.ts";
 import {useEffect, useEffectEvent, useRef, useState} from "react";
 
 export default function Dropdown({
