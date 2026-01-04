@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lexical/file": "^0.39.0",
     "@lexical/react": "^0.39.0",
+    "install": "^0.13.0",
     "lexical": "^0.39.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
