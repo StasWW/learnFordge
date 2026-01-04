@@ -57,7 +57,7 @@ export default function FAQ() {
   }, [toggleItem]);
 
   return (
-    <section className="faq-section" aria-labelledby="faq-heading">
+    <section className="faq-section" id="faq" aria-labelledby="faq-heading">
       <div className="faq-container">
         <header className="faq-header">
           <span className="section-kicker">FAQ</span>

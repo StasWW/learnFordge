@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <header className="hero">
+    <header className="hero" id="home">
       <div className="hero-glow hero-glow-left" aria-hidden="true" />
       <div className="hero-glow hero-glow-right" aria-hidden="true" />
       <div className="hero-content">
@@ -15,7 +15,6 @@ export default function Header() {
             </div>
           </div>
         </div>
-
       </div>
     </header>
   );

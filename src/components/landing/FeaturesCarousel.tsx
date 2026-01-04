@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { CloudIcon } from "../../assets/images/featureIcons/CloudIcon";
 import type { featureProps } from "../../types/landingTypes";
 import {AnalyticsIcon} from "../../assets/images/featureIcons/AnalyticsIcon";
@@ -34,40 +34,42 @@ const features: featureProps[] = [
 
 
 export default function FeaturesCarousel() {
-	const viewportRef = useRef<HTMLDivElement | null>(null);
+	const trackRef = useRef<HTMLDivElement | null>(null);
+	const [isPaused, setIsPaused] = useState(false);
+
+	const loopedFeatures = useMemo(
+		() => [...features, ...features], // duplicate for seamless loop
+		[],
+	);
 
 	const scrollByCard = (direction: -1 | 1) => {
-		const viewport = viewportRef.current;
-		if (!viewport) return;
-		const firstCard = viewport.querySelector<HTMLElement>(".feature");
-		const gap = 16; // соответствует gap в стилях
-		const cardWidth = firstCard?.offsetWidth ?? viewport.clientWidth;
-		viewport.scrollBy({ left: (cardWidth + gap) * direction, behavior: "smooth" });
+		const track = trackRef.current;
+		if (!track) return;
+		
+		const firstCard = track.querySelector<HTMLElement>(".feature");
+		const gap = 20;
+		const cardWidth = firstCard?.offsetWidth ?? 420;
+		
+		// Temporarily pause animation
+		setIsPaused(true);
+		
+		// Get current computed transform
+		const computedStyle = window.getComputedStyle(track);
+		const matrix = new DOMMatrix(computedStyle.transform);
+		const currentX = matrix.m41;
+		
+		// Apply new position
+		track.style.transform = `translateX(${currentX + (cardWidth + gap) * -direction}px)`;
+		
+		// Resume animation after a short delay
+		setTimeout(() => {
+			track.style.transform = '';
+			setIsPaused(false);
+		}, 500);
 	};
 
-	useEffect(() => {
-		const viewport = viewportRef.current;
-		if (!viewport) return;
-		const interval = window.setInterval(() => {
-			const firstCard = viewport.querySelector<HTMLElement>(".feature");
-			const gap = 16;
-			const cardWidth = firstCard?.offsetWidth ?? viewport.clientWidth;
-			const step = cardWidth + gap;
-			const maxScroll = viewport.scrollWidth - viewport.clientWidth;
-			const nextLeft = viewport.scrollLeft + step;
-
-			if (nextLeft >= maxScroll - 1) {
-				viewport.scrollTo({ left: 0, behavior: "smooth" });
-			} else {
-				viewport.scrollBy({ left: step, behavior: "smooth" });
-			}
-		}, 4000);
-
-		return () => window.clearInterval(interval);
-	}, []);
-
 	return (
-		<section className="features-carousel" aria-label="Ключевые возможности LearnForge">
+		<section className="features-carousel" id="features" aria-label="Ключевые возможности LearnForge">
 			<header className="carousel-header">
 				<div className="section-kicker">Возможности</div>
 				<div className="carousel-title">
@@ -75,15 +77,20 @@ export default function FeaturesCarousel() {
 					<p>От живых созвонов до тестов и облачных материалов — всё в одном пространстве</p>
 				</div>
 			</header>
-			<div className="carousel-viewport" ref={viewportRef}>
-				<div className="carousel-track">
-					{features.map((value, index) => (
+			<div className="carousel-viewport">
+				<div 
+					className={`carousel-track ${isPaused ? 'paused' : ''}`}
+					ref={trackRef}
+					onMouseEnter={() => setIsPaused(true)}
+					onMouseLeave={() => setIsPaused(false)}
+				>
+					{loopedFeatures.map((value, index) => (
 						<Feature
 							icon={value.icon}
 							name={value.name}
-							iconSize={72}
+							iconSize={80}
 							description={value.description}
-							key={index}
+							key={`${value.name}-${index}`}
 							backgroundColor={value.backgroundColor}
 						/>
 					))}
