@@ -1,8 +1,8 @@
 .faq-section {
     position: relative;
-    padding: 4rem 1.5rem 5rem;
-    margin-top: clamp(12rem, 16vh, 16rem);
-    background: linear-gradient(180deg, rgba(108, 186, 255, 0.08) 0%, rgba(5, 9, 18, 0.94) 100%);
+    padding: clamp(3.5rem, 5vw, 5rem) 1.5rem 5rem;
+    margin-top: clamp(4rem, 8vw, 8rem);
+    background: linear-gradient(180deg, rgba(248, 250, 252, 0) 0%, rgba(108, 186, 255, 0.12) 26%, rgba(5, 9, 18, 0.9) 100%);
     overflow: hidden;
 }
 
@@ -160,5 +160,19 @@
 @media (max-width: 640px) {
     .faq-question {
         align-items: flex-start;
+    }
+}
+
+@media (max-width: 1024px) {
+    .faq-section {
+        margin-top: clamp(3.25rem, 6vw, 5.5rem);
+        padding-top: clamp(3rem, 6vw, 4.25rem);
+    }
+}
+
+@media (max-width: 640px) {
+    .faq-section {
+        margin-top: clamp(2.5rem, 7vw, 4.5rem);
+        padding-top: clamp(2.5rem, 7vw, 3.75rem);
     }
 }

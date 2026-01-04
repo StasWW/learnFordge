@@ -6,11 +6,11 @@ export default function Header() {
       <div className="hero-content">
         <div className="hero-text">
           <h1 className="company-name">LearnForge</h1>
-          <p className="slogan">Чистый интерфейс для видеозвонков, уроков и тестов</p>
+          <p className="slogan">Создавайте и запускайте обучение быстрее, чем когда-либо.</p>
           <div className="hero-actions">
             <div className="cta-buttons">
               <button className="btn-primary" type="button">
-                Начать бесплатно
+                Попробовать
               </button>
             </div>
           </div>

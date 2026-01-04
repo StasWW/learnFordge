@@ -62,7 +62,6 @@ export default function FAQ() {
         <header className="faq-header">
           <span className="section-kicker">FAQ</span>
           <h2 id="faq-heading">Вопросы и ответы</h2>
-          <p>Ответы на самые частые вопросы о платформе</p>
         </header>
         <div className="faq-list" role="list">
           {faqData.map((item) => {
