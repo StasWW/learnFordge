@@ -92,9 +92,6 @@ export default function FAQ() {
                   aria-controls={`faq-answer-${item.id}`}
                 >
                   <div className="faq-question-text">
-                    <span className="faq-prefix" aria-hidden="true">
-                      Q
-                    </span>
                     <span>{item.question}</span>
                   </div>
                   <svg
