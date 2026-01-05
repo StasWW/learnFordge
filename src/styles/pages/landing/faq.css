@@ -2,33 +2,9 @@
     position: relative;
     padding: clamp(5rem, 8vw, 7rem) 1.5rem 5rem;
     margin-top: 0;
-    background:
-        radial-gradient(120% 120% at 16% 12%, rgba(124, 247, 210, 0.08), transparent 42%),
-        radial-gradient(120% 120% at 84% 4%, rgba(108, 186, 255, 0.08), transparent 44%),
-        linear-gradient(180deg, rgba(5, 9, 18, 0.28) 0%, rgba(5, 9, 18, 0.78) 42%, rgba(5, 9, 18, 0.94) 68%, #050912 100%);
+    background: none;
     overflow: hidden;
     isolation: isolate;
-}
-
-.faq-section::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--gradient-glow);
-    opacity: 0.32;
-    filter: blur(180px);
-    mix-blend-mode: screen;
-    pointer-events: none;
-}
-
-.faq-section::after {
-    content: "";
-    position: absolute;
-    inset: 1.25rem 2rem auto 2rem;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(124, 247, 210, 0.4) 28%, rgba(108, 186, 255, 0.4) 68%, transparent 100%);
-    opacity: 0.7;
-    pointer-events: none;
 }
 
 .faq-container {

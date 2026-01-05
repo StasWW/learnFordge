@@ -6,8 +6,7 @@
     width: 100vw;
     overflow: hidden;
     font-family: inherit;
-    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 45%, rgba(5, 9, 18, 0.78) 85%, #050912 100%);
-    isolation: isolate;
+    background: none;
 }
 
 .features-carousel .carousel-header {

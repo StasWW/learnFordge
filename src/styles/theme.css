@@ -74,6 +74,10 @@
     --blur-amount: 18px;
     --gradient-accent: linear-gradient(135deg, rgba(13, 148, 136, 0.12) 0%, rgba(2, 132, 199, 0.15) 50%, rgba(101, 163, 13, 0.12) 100%);
     --gradient-glow: radial-gradient(circle at 18% 18%, rgba(13, 148, 136, 0.2), transparent 36%), radial-gradient(circle at 78% 10%, rgba(2, 132, 199, 0.18), transparent 34%), radial-gradient(circle at 35% 78%, rgba(101, 163, 13, 0.16), transparent 36%);
+    --landing-gradient:
+        radial-gradient(120% 120% at 12% 10%, rgba(124, 247, 210, 0.12), transparent 42%),
+        radial-gradient(120% 120% at 88% 6%, rgba(108, 186, 255, 0.12), transparent 44%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
     --page-gradient:
         radial-gradient(120% 120% at 10% 12%, rgba(13, 148, 136, 0.06), transparent 42%),
         radial-gradient(120% 120% at 82% 0%, rgba(2, 132, 199, 0.06), transparent 44%),
@@ -118,6 +122,10 @@
     --blur-amount: 22px;
     --gradient-accent: linear-gradient(135deg, rgba(124, 247, 210, 0.16) 0%, rgba(108, 186, 255, 0.2) 50%, rgba(199, 243, 109, 0.18) 100%);
     --gradient-glow: radial-gradient(circle at 18% 18%, rgba(124, 247, 210, 0.34), transparent 36%), radial-gradient(circle at 78% 10%, rgba(108, 186, 255, 0.3), transparent 34%), radial-gradient(circle at 35% 78%, rgba(199, 243, 109, 0.26), transparent 36%);
+    --landing-gradient:
+        radial-gradient(120% 120% at 12% 10%, rgba(124, 247, 210, 0.24), transparent 42%),
+        radial-gradient(120% 120% at 88% 6%, rgba(108, 186, 255, 0.24), transparent 44%),
+        linear-gradient(180deg, #0a1221 0%, #050912 100%);
     --page-gradient:
         radial-gradient(120% 120% at 10% 12%, rgba(124, 247, 210, 0.12), transparent 42%),
         radial-gradient(120% 120% at 82% 0%, rgba(108, 186, 255, 0.12), transparent 44%),
@@ -161,6 +169,10 @@
         --blur-amount: 22px;
         --gradient-accent: linear-gradient(135deg, rgba(124, 247, 210, 0.16) 0%, rgba(108, 186, 255, 0.2) 50%, rgba(199, 243, 109, 0.18) 100%);
         --gradient-glow: radial-gradient(circle at 18% 18%, rgba(124, 247, 210, 0.34), transparent 36%), radial-gradient(circle at 78% 10%, rgba(108, 186, 255, 0.3), transparent 34%), radial-gradient(circle at 35% 78%, rgba(199, 243, 109, 0.26), transparent 36%);
+        --landing-gradient:
+            radial-gradient(120% 120% at 12% 10%, rgba(124, 247, 210, 0.24), transparent 42%),
+            radial-gradient(120% 120% at 88% 6%, rgba(108, 186, 255, 0.24), transparent 44%),
+            linear-gradient(180deg, #0a1221 0%, #050912 100%);
         --page-gradient:
             radial-gradient(120% 120% at 10% 12%, rgba(124, 247, 210, 0.12), transparent 42%),
             radial-gradient(120% 120% at 82% 0%, rgba(108, 186, 255, 0.12), transparent 44%),
