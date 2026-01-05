@@ -48,12 +48,13 @@
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.45rem 0.9rem;
+    padding: 0.55rem 1.05rem;
     border-radius: 999px;
     background: rgba(124, 247, 210, 0.12);
     color: var(--accent);
-    font-weight: 800;
-    letter-spacing: 0.04em;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.03em;
 }
 
 .faq-header {

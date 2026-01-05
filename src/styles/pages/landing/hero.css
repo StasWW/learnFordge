@@ -137,8 +137,9 @@
     font-size: 1.16rem;
     font-weight: 800;
     color: #04111f;
-    background: linear-gradient(120deg, #a6e6d7 0%, #87c3ff 55%, #d6f5a4 100%);
+    background: linear-gradient(120deg, var(--accent) 0%, var(--secondary) 50%, var(--success) 100%);
     background-size: 180% 180%;
+    background-position: 0 0;
     border: none;
     border-radius: 18px;
     cursor: pointer;
@@ -148,9 +149,9 @@
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(120deg, var(--accent) 0%, var(--secondary) 52%, var(--success) 100%);
-    box-shadow: 0 22px 60px rgba(10, 22, 36, 0.32);
+    transform: translateY(-1px);
+    background-position: 100% 0;
+    box-shadow: 0 12px 32px rgba(108, 186, 255, 0.45);
 }
 
 .btn-primary:focus-visible {
