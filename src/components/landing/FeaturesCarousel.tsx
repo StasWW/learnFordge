@@ -10,25 +10,25 @@ const features: featureProps[] = [
 		name: 'Облако',
 		description: 'Материалы и уроки живут в облаке, доступны на любом устройстве.',
 		icon: CloudIcon,
-		backgroundColor: 'rgba(124, 247, 210, 0.14)',
+		backgroundColor: 'var(--feature-card-bg-cloud)',
 	},
 	{
 		name: 'Аналитика',
 		description: 'Прогресс, тесты и завершение курсов в одном отчёте.',
 		icon: AnalyticsIcon,
-		backgroundColor: 'rgba(108, 186, 255, 0.14)',
+		backgroundColor: 'var(--feature-card-bg-analytics)',
 	},
 	{
 		name: 'Уроки',
 		description: 'Видео, тесты и задания в одном потоке, без лишних вкладок.',
 		icon: LessonsIcon,
-		backgroundColor: 'rgba(199, 243, 109, 0.16)',
+		backgroundColor: 'var(--feature-card-bg-lessons)',
 	},
 	{
 		name: 'Конференции',
 		description: 'Видеозвонки прямо в платформе, запись включена по умолчанию.',
 		icon: VideoMeetingIcon,
-		backgroundColor: 'rgba(255, 201, 125, 0.16)',
+		backgroundColor: 'var(--feature-card-bg-meetings)',
 	}
 ];
 

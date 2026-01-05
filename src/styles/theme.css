@@ -79,6 +79,20 @@
         radial-gradient(120% 120% at 82% 0%, rgba(2, 132, 199, 0.06), transparent 44%),
         linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
 
+    --feature-card-bg-cloud: rgba(124, 247, 210, 0.14);
+    --feature-card-bg-analytics: rgba(108, 186, 255, 0.14);
+    --feature-card-bg-lessons: rgba(199, 243, 109, 0.16);
+    --feature-card-bg-meetings: rgba(255, 201, 125, 0.16);
+
+    --carousel-fade-color: rgba(5, 9, 18, 0.65);
+    --carousel-fade-transparent: rgba(5, 9, 18, 0);
+    --feature-card-shadow: 0 6px 14px rgba(4, 12, 24, 0.18);
+    --feature-card-shadow-hover: 0 8px 18px rgba(4, 12, 24, 0.22);
+    --carousel-control-shadow: 0 4px 12px rgba(4, 12, 24, 0.18);
+    --carousel-control-shadow-hover: 0 6px 16px rgba(4, 12, 24, 0.22);
+    --carousel-control-border-hover: rgba(124, 247, 210, 0.35);
+    --carousel-control-outline: rgba(124, 247, 210, 0.45);
+
     font-family: 'Montserrat', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
@@ -108,6 +122,20 @@
         radial-gradient(120% 120% at 10% 12%, rgba(124, 247, 210, 0.12), transparent 42%),
         radial-gradient(120% 120% at 82% 0%, rgba(108, 186, 255, 0.12), transparent 44%),
         linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+
+    --feature-card-bg-cloud: rgba(124, 247, 210, 0.16);
+    --feature-card-bg-analytics: rgba(108, 186, 255, 0.16);
+    --feature-card-bg-lessons: rgba(199, 243, 109, 0.18);
+    --feature-card-bg-meetings: rgba(255, 201, 125, 0.18);
+
+    --carousel-fade-color: rgba(5, 9, 18, 0.7);
+    --carousel-fade-transparent: rgba(5, 9, 18, 0);
+    --feature-card-shadow: 0 6px 14px rgba(2, 8, 20, 0.42);
+    --feature-card-shadow-hover: 0 8px 18px rgba(2, 8, 20, 0.5);
+    --carousel-control-shadow: 0 4px 12px rgba(2, 8, 20, 0.4);
+    --carousel-control-shadow-hover: 0 6px 16px rgba(2, 8, 20, 0.48);
+    --carousel-control-border-hover: rgba(124, 247, 210, 0.35);
+    --carousel-control-outline: rgba(124, 247, 210, 0.45);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -137,6 +165,20 @@
             radial-gradient(120% 120% at 10% 12%, rgba(124, 247, 210, 0.12), transparent 42%),
             radial-gradient(120% 120% at 82% 0%, rgba(108, 186, 255, 0.12), transparent 44%),
             linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+
+        --feature-card-bg-cloud: rgba(124, 247, 210, 0.16);
+        --feature-card-bg-analytics: rgba(108, 186, 255, 0.16);
+        --feature-card-bg-lessons: rgba(199, 243, 109, 0.18);
+        --feature-card-bg-meetings: rgba(255, 201, 125, 0.18);
+
+        --carousel-fade-color: rgba(5, 9, 18, 0.7);
+        --carousel-fade-transparent: rgba(5, 9, 18, 0);
+        --feature-card-shadow: 0 6px 14px rgba(2, 8, 20, 0.42);
+        --feature-card-shadow-hover: 0 8px 18px rgba(2, 8, 20, 0.5);
+        --carousel-control-shadow: 0 4px 12px rgba(2, 8, 20, 0.4);
+        --carousel-control-shadow-hover: 0 6px 16px rgba(2, 8, 20, 0.48);
+        --carousel-control-border-hover: rgba(124, 247, 210, 0.35);
+        --carousel-control-outline: rgba(124, 247, 210, 0.45);
     }
 }
 
