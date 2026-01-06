@@ -121,3 +121,28 @@
     white-space: nowrap;
   }
 }
+
+.editor-input {
+  border: var(--accent) 3px solid;
+  padding: 0 1rem;
+  border-radius: 10px;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.5);
+  }
+  p.editor-paragraph {
+    text-align: start;
+
+
+    span.editor-image {
+      float: left;
+      margin-right: 8px;
+      margin-bottom: 4px;
+
+      img {
+        display: block;
+      }
+    }
+  }
+}

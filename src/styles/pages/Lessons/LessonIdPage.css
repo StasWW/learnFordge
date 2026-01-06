@@ -6,14 +6,4 @@
     width: min(95%, 1000px);
     margin: 0 auto;
 
-    .editor-input {
-        border: var(--accent) 3px solid;
-        padding: 0 1rem;
-        border-radius: 10px;
-
-        &:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.5);
-        }
-    }
 }
