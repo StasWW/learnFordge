@@ -87,21 +87,11 @@ export default function formatText(
   }
 
   const insertGraphic = () => {
-    const editorInput = document.querySelector('div.editor-input') as HTMLDivElement;
-    const computedStyle = window.getComputedStyle(editorInput);
-    const editorWidth = parseInt(computedStyle.width) || 640;
-
-    const HORIZONTAL_PADDING = 40;
-
     editor.update(() => {
       const selection = $getSelection();
 
-
       if ($isRangeSelection(selection)) {
-        const graphNode = $createGraphNode({
-          width: editorWidth - HORIZONTAL_PADDING,
-          height: 320,
-        });
+        const graphNode = $createGraphNode();
         $insertNodes([graphNode]);
       }
     });

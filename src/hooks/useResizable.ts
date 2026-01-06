@@ -110,6 +110,7 @@ export function useResizable({
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentWidth(width);
     setCurrentHeight(height);
   }, [width, height]);
