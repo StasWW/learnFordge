@@ -33,17 +33,22 @@ const features: featureProps[] = [
 ];
 
 const AUTO_SPEED_PX_PER_SEC = 36;
+const STEP_TRANSITION = "transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1)";
 
 export default function FeaturesCarousel() {
     const trackRef = useRef<HTMLDivElement | null>(null);
     const [isPaused, setIsPaused] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const [repeatCount, setRepeatCount] = useState(3);
+    const [disableTransition, setDisableTransition] = useState(false);
+    const [isStepAnimating, setIsStepAnimating] = useState(false);
     const [offset, setOffset] = useState(0);
 
     const offsetRef = useRef(0);
     const dragStartRef = useRef(0);
     const lastTimeRef = useRef<number | null>(null);
+    const stepTimerRef = useRef<number | null>(null);
+    const isStepAnimatingRef = useRef(false);
 
     const loopedFeatures = useMemo(
         () => Array.from({ length: repeatCount }, () => features).flat(),
@@ -53,16 +58,75 @@ export default function FeaturesCarousel() {
     const getBaseWidth = () => {
         const track = trackRef.current;
         if (!track) return 0;
+
+        const cards = track.querySelectorAll<HTMLElement>(".feature");
+        if (cards.length > features.length) {
+            const firstCard = cards[0];
+            const nextCycleCard = cards[features.length];
+            const measured = nextCycleCard.offsetLeft - firstCard.offsetLeft;
+            if (measured > 0) return measured;
+        }
+
         return track.scrollWidth / Math.max(1, repeatCount);
     };
 
-    const applyOffset = (value: number) => {
+    const runStepAnimation = () => {
+        if (stepTimerRef.current) {
+            window.clearTimeout(stepTimerRef.current);
+        }
+        setIsStepAnimating(true);
+        isStepAnimatingRef.current = true;
+        stepTimerRef.current = window.setTimeout(() => {
+            setIsStepAnimating(false);
+            isStepAnimatingRef.current = false;
+            stepTimerRef.current = null;
+        }, 360);
+    };
+
+    const applyOffset = (value: number, options?: { skipWrap?: boolean; onWrap?: (shift: number) => void }) => {
         const baseWidth = getBaseWidth();
         if (!baseWidth) return;
 
-        const wrapped = ((value % baseWidth) + baseWidth) % baseWidth;
-        offsetRef.current = wrapped;
-        setOffset(wrapped);
+        const track = trackRef.current;
+        const viewportWidth = track?.parentElement?.clientWidth ?? window.innerWidth;
+        const trackWidth = baseWidth * repeatCount;
+
+        let next = value;
+        let jumped = false;
+
+        if (!options?.skipWrap) {
+            // Keep the virtual scroll inside the middle copies so recentering is invisible.
+            const minOffset = baseWidth;
+            const maxOffset = Math.max(minOffset, trackWidth - baseWidth - viewportWidth);
+
+            if (next < minOffset) {
+                const cyclesToAdd = Math.ceil((minOffset - next) / baseWidth);
+                const shift = baseWidth * cyclesToAdd;
+                next += shift;
+                jumped = true;
+                options?.onWrap?.(shift);
+            } else if (next > maxOffset) {
+                const cyclesToSubtract = Math.ceil((next - maxOffset) / baseWidth);
+                const shift = baseWidth * cyclesToSubtract;
+                next -= shift;
+                jumped = true;
+                options?.onWrap?.(-shift);
+            }
+        }
+
+        if (jumped) {
+            setDisableTransition(true);
+            requestAnimationFrame(() => setDisableTransition(false));
+            if (stepTimerRef.current) {
+                window.clearTimeout(stepTimerRef.current);
+                stepTimerRef.current = null;
+            }
+            setIsStepAnimating(false);
+            isStepAnimatingRef.current = false;
+        }
+
+        offsetRef.current = next;
+        setOffset(next);
     };
 
     useEffect(() => {
@@ -72,11 +136,12 @@ export default function FeaturesCarousel() {
             const gap = 20;
             const cardWidth = firstCard?.offsetWidth ?? 420;
             const totalCardWidth = cardWidth + gap;
+            const baseWidth = features.length * totalCardWidth;
+            const viewportWidth = track?.parentElement?.clientWidth ?? window.innerWidth;
 
-            // Ensure we have enough cards to cover at least 2x viewport to avoid gaps
-            const minWidth = window.innerWidth * 2;
-            const neededCards = Math.ceil(minWidth / totalCardWidth);
-            const repeats = Math.max(3, Math.ceil(neededCards / features.length));
+            // Keep an extra-wide buffer so animated steps never approach the ends.
+            const repeatsForBuffer = Math.ceil((viewportWidth + 5 * baseWidth) / baseWidth);
+            const repeats = Math.max(6, repeatsForBuffer);
             setRepeatCount(repeats);
         };
 
@@ -94,6 +159,11 @@ export default function FeaturesCarousel() {
     useEffect(() => {
         let frame: number;
         const step = (ts: number) => {
+            if (isStepAnimatingRef.current) {
+                frame = requestAnimationFrame(step);
+                return;
+            }
+
             if (lastTimeRef.current === null) {
                 lastTimeRef.current = ts;
             }
@@ -121,7 +191,47 @@ export default function FeaturesCarousel() {
         const cardWidth = firstCard?.offsetWidth ?? 420;
         const step = (cardWidth + gap) * direction;
 
-        applyOffset(offsetRef.current + step);
+        const baseWidth = getBaseWidth();
+        if (!baseWidth) return;
+
+        const viewportWidth = track.parentElement?.clientWidth ?? window.innerWidth;
+        const trackWidth = baseWidth * repeatCount;
+        const minOffset = baseWidth;
+        const maxOffset = Math.max(minOffset, trackWidth - baseWidth - viewportWidth);
+
+        // Rebase into the safe middle copy so the animated step never crosses wrap boundaries.
+        let current = offsetRef.current;
+        let target = current + step;
+        const needsRebase = target < minOffset || target > maxOffset;
+        if (needsRebase) {
+            const middleCycle = Math.floor(repeatCount / 2);
+            const middleOffset = baseWidth * middleCycle;
+            const relative = ((current - middleOffset) % baseWidth + baseWidth) % baseWidth;
+            current = middleOffset + relative;
+
+            if (current > maxOffset) {
+                const cyclesBack = Math.ceil((current - maxOffset) / baseWidth);
+                current -= baseWidth * cyclesBack;
+            } else if (current < minOffset) {
+                const cyclesForward = Math.ceil((minOffset - current) / baseWidth);
+                current += baseWidth * cyclesForward;
+            }
+
+            target = current + step;
+
+            setDisableTransition(true);
+            setOffset(current);
+            offsetRef.current = current;
+            requestAnimationFrame(() => {
+                setDisableTransition(false);
+                runStepAnimation();
+                applyOffset(target, { skipWrap: true });
+            });
+            return;
+        }
+
+        runStepAnimation();
+        applyOffset(target, { skipWrap: true });
     };
 
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -134,7 +244,11 @@ export default function FeaturesCarousel() {
 
     const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
         if (!isDragging) return;
-        applyOffset(dragStartRef.current - e.clientX);
+        applyOffset(dragStartRef.current - e.clientX, {
+            onWrap: (shift) => {
+                dragStartRef.current += shift;
+            },
+        });
     };
 
     const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -144,14 +258,25 @@ export default function FeaturesCarousel() {
         }
         setIsDragging(false);
         setIsPaused(false);
+        applyOffset(offsetRef.current);
     };
 
     const trackStyle: CSSProperties = {
         transform: `translateX(${-offset}px)`,
+        transition: disableTransition || isDragging ? "none" : isStepAnimating ? STEP_TRANSITION : "none",
     };
 
+    useEffect(
+        () => () => {
+            if (stepTimerRef.current) {
+                window.clearTimeout(stepTimerRef.current);
+            }
+        },
+        [],
+    );
+
     return (
-        <section className="features-carousel" id="features" aria-label="Возможности LearnForge">
+        <section className="features-carousel" id="features" aria-label="Возможности learnFordge">
             <header className="carousel-header">
                 <div className="section-kicker">Возможности</div>
                 <div className="carousel-title">

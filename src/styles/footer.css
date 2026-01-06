@@ -1,0 +1,42 @@
+.site-footer {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    padding: 1.65rem clamp(1rem, 4vw, 2.5rem);
+    background:
+        linear-gradient(135deg, rgba(124, 247, 210, 0.08), rgba(108, 186, 255, 0.06), rgba(199, 243, 109, 0.06)),
+        linear-gradient(180deg, rgba(10, 16, 28, 0.08), rgba(10, 16, 28, 0.12)),
+        var(--glass-bg-strong);
+    border-top: 1px solid rgba(124, 247, 210, 0.35);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 -12px 28px rgba(4, 12, 24, 0.14);
+}
+
+.footer-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    flex-wrap: nowrap;
+    color: var(--text);
+}
+
+.footer-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.footer-brand {
+    font-size: 1.05rem;
+}
+
+.footer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

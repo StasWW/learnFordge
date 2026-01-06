@@ -2,3 +2,9 @@
 @import "./landing/carousel.css";
 @import "./landing/faq.css";
 @import "./landing/navbar.css";
+
+#home,
+#features,
+#faq {
+    scroll-margin-top: clamp(4.5rem, 8vw, 6rem);
+}

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 interface FAQItem {
   id: string;
@@ -71,7 +71,7 @@ export default function FAQ() {
           <span className="section-kicker">FAQ</span>
           <h2 id="faq-heading">Ответы на популярные вопросы</h2>
           <p className="faq-subtitle">
-            Коротко о форматах, тестах, оплате и поддержке в LearnForge.
+            Коротко о форматах, тестах, оплате и поддержке в learnFordge.
           </p>
         </header>
         <div className="faq-list" role="list">
