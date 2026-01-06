@@ -160,6 +160,8 @@ export default function FeaturesCarousel() {
         let frame: number;
         const step = (ts: number) => {
             if (isStepAnimatingRef.current) {
+                // Keep the timeline in sync while the step animation runs so auto-scroll doesn't jump afterwards.
+                lastTimeRef.current = ts;
                 frame = requestAnimationFrame(step);
                 return;
             }
@@ -276,7 +278,7 @@ export default function FeaturesCarousel() {
     );
 
     return (
-        <section className="features-carousel" id="features" aria-label="Возможности learnFordge">
+        <section className="features-carousel" id="features" aria-label="Возможности learnForge">
             <header className="carousel-header">
                 <div className="section-kicker">Возможности</div>
                 <div className="carousel-title">

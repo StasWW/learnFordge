@@ -1,3 +1,5 @@
+@import "./footer.css";
+
 @font-face {
   font-display: swap;
   font-family: 'Montserrat';
@@ -48,8 +50,6 @@
   src: url('../assets/fonts/montserrat-v31-cyrillic_latin-900.woff2') format('woff2');
 }
 
-@import "./footer.css";
-
 * {
     box-sizing: border-box;
 }
@@ -65,6 +65,10 @@
     --secondary: #0284c7;
     --success: #65a30d;
     --selected: rgba(13, 148, 136, 0.15);
+    --footer-bg: linear-gradient(180deg, #1d293a 0%, #111a27 100%);
+    --footer-border: rgba(255, 255, 255, 0.08);
+    --footer-text: #c4cedd;
+    --footer-separator: rgba(2, 8, 20, 0.12);
 
     --glass-bg: rgba(255, 255, 255, 0.85);
     --glass-bg-strong: rgba(248, 250, 252, 0.95);
@@ -113,6 +117,10 @@
     --secondary: #6cbaff;
     --success: #c7f36d;
     --selected: rgba(124, 247, 210, 0.25);
+    --footer-bg: linear-gradient(180deg, #152035 0%, #0c1624 100%);
+    --footer-border: rgba(255, 255, 255, 0.08);
+    --footer-text: #d6dfed;
+    --footer-separator: rgba(255, 255, 255, 0.12);
 
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-bg-strong: rgba(10, 16, 28, 0.76);
@@ -160,6 +168,9 @@
         --secondary: #6cbaff;
         --success: #c7f36d;
         --selected: rgba(124, 247, 210, 0.25);
+        --footer-bg: linear-gradient(180deg, #152035 0%, #0c1624 100%);
+        --footer-border: rgba(255, 255, 255, 0.08);
+        --footer-text: #d6dfed;
 
         --glass-bg: rgba(255, 255, 255, 0.03);
         --glass-bg-strong: rgba(10, 16, 28, 0.76);
@@ -215,10 +226,11 @@ body, #id {
 }
 
 .theme-toggle {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.7rem;
-    padding: 0.55rem 0.85rem;
+    padding: 0.6rem 0.85rem;
     border-radius: 14px;
     border: 1px solid var(--glass-border-strong);
     background: linear-gradient(135deg, rgba(124, 247, 210, 0.08), rgba(108, 186, 255, 0.06)), var(--glass-bg);
@@ -226,6 +238,7 @@ body, #id {
     font-weight: 700;
     box-shadow: 0 10px 24px rgba(4, 12, 24, 0.22);
     backdrop-filter: blur(var(--blur-amount));
+    font-family: 'Montserrat', system-ui, sans-serif;
 }
 
 .theme-toggle__label {
@@ -246,22 +259,21 @@ body, #id {
     display: inline-flex;
 }
 
-.theme-toggle__hint {
-    font-size: 0.8rem;
-    color: var(--muted-text);
-    font-weight: 600;
-}
-
-.theme-toggle__select-wrap {
+.theme-toggle__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
     position: relative;
 }
 
-.theme-toggle__select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding: 0.6rem 2.4rem 0.6rem 0.9rem;
-    border-radius: 10px;
+.theme-toggle__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding: 0.55rem 0.8rem;
+    min-width: 10.5rem;
+    border-radius: 12px;
     border: 1px solid var(--glass-border-strong);
     background:
         linear-gradient(135deg, rgba(124, 247, 210, 0.14), rgba(108, 186, 255, 0.12)),
@@ -270,25 +282,91 @@ body, #id {
     font-weight: 700;
     cursor: pointer;
     box-shadow: 0 8px 18px rgba(4, 12, 24, 0.2);
-    min-width: 10rem;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
-.theme-toggle__select:focus-visible {
+.theme-toggle__trigger:hover {
+    transform: translateY(-1px);
+    border-color: rgba(124, 247, 210, 0.35);
+    box-shadow: 0 12px 28px rgba(4, 12, 24, 0.28);
+}
+
+.theme-toggle__trigger:focus-visible {
     outline: 2px solid rgba(124, 247, 210, 0.45);
     outline-offset: 2px;
 }
 
-.theme-toggle__select-wrap::after {
-    content: "";
-    position: absolute;
-    right: 0.8rem;
-    top: 50%;
-    transform: translateY(-50%);
+.theme-toggle__value {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    text-align: center;
+}
+
+.theme-toggle__arrow {
+    display: inline-flex;
     width: 10px;
     height: 6px;
-    background: linear-gradient(180deg, rgba(124, 247, 210, 0.9), rgba(108, 186, 255, 0.65));
+    background: linear-gradient(180deg, rgba(124, 247, 210, 0.9), rgba(108, 186, 255, 0.7));
     clip-path: polygon(0 0, 100% 0, 50% 100%);
-    pointer-events: none;
+    transition: transform 0.2s ease;
+}
+
+.theme-toggle__trigger[aria-expanded="true"] .theme-toggle__arrow {
+    transform: rotate(180deg);
+}
+
+.theme-toggle__menu {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.65rem);
+    padding: 0.5rem;
+    display: grid;
+    gap: 0.4rem;
+    min-width: 12.5rem;
+    border-radius: 14px;
+    border: 1px solid var(--glass-border-strong);
+    background:
+        linear-gradient(145deg, rgba(124, 247, 210, 0.08), rgba(108, 186, 255, 0.06)),
+        linear-gradient(180deg, rgba(5, 9, 18, 0.9), rgba(5, 9, 18, 0.82));
+    box-shadow: 0 20px 48px rgba(4, 12, 24, 0.36);
+    backdrop-filter: blur(var(--blur-amount));
+    z-index: 20;
+}
+
+.theme-toggle__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    padding: 0.6rem 0.7rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text);
+    font-weight: 700;
+    font-family: 'Montserrat', system-ui, sans-serif;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+}
+
+.theme-toggle__option:hover,
+.theme-toggle__option:focus-visible {
+    background: rgba(124, 247, 210, 0.12);
+    border-color: rgba(124, 247, 210, 0.28);
+    outline: none;
+}
+
+.theme-toggle__option[aria-selected="true"] {
+    background: linear-gradient(135deg, rgba(124, 247, 210, 0.16), rgba(108, 186, 255, 0.14));
+    border-color: rgba(124, 247, 210, 0.4);
+}
+
+.theme-toggle__check {
+    font-size: 0.95rem;
+    color: var(--accent);
 }
 
 @media (max-width: 640px) {
@@ -298,11 +376,16 @@ body, #id {
         padding: 0.6rem 0.8rem;
     }
 
-    .theme-toggle__text {
-        gap: 0.05rem;
+    .theme-toggle__controls {
+        width: 100%;
+        justify-content: flex-end;
     }
 
-    .theme-toggle__select {
+    .theme-toggle__trigger {
+        width: 100%;
+    }
+
+    .theme-toggle__menu {
         width: 100%;
     }
 }
