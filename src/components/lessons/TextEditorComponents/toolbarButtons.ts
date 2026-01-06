@@ -16,6 +16,7 @@ import InsertLinkOutlinedIcon from "../../../assets/images/toolbarIcons/link.svg
 import FormatAlignLeftOutlinedIcon from "../../../assets/images/toolbarIcons/text-left.svg";
 import FormatAlignJustifyOutlinedIcon from "../../../assets/images/toolbarIcons/text-center.svg";
 import FormatAlignRightOutlinedIcon from "../../../assets/images/toolbarIcons/text-right.svg";
+import GraphIcon from "../../../assets/images/toolbarIcons/desmos.png";
 
 import type {PluginItem} from "../../../types/lessonTypes.ts";
 
@@ -38,15 +39,17 @@ export const eventTypes = {
   formatAlignCenter: "center",
   formatAlignRight: "right",
   insertImage: "insertImage",
+  insertGraphic: 'insertGraphic',
+
 };
 
-const pluginsList: Record<string, PluginItem> = {
-  redo: {
+const pluginsList: Record<keyof typeof eventTypes, PluginItem> = {
+  formatRedo: {
     icon: RedoOutlinedIcon,
     event: eventTypes.formatRedo,
     label: "Повторить",
   },
-  undo: {
+  formatUndo: {
     icon: UndoOutlinedIcon,
     event: eventTypes.formatUndo,
     label: "Отменить",
@@ -66,12 +69,12 @@ const pluginsList: Record<string, PluginItem> = {
     event: eventTypes.h2,
     label: "Заголовок 2",
   },
-  bulletList: {
+  ul: {
     icon: FormatListBulletedIcon,
     event: eventTypes.ul,
     label: "Маркированный список",
   },
-  numberedList: {
+  ol: {
     icon: FormatListNumberedIcon,
     event: eventTypes.ol,
     label: "Нумерованный список",
@@ -81,56 +84,61 @@ const pluginsList: Record<string, PluginItem> = {
     event: eventTypes.quote,
     label: "Цитата",
   },
-  code: {
+  formatCode: {
     icon: CodeIcon,
     event: eventTypes.formatCode,
     label: "Код",
   },
-  bold: {
+  formatBold: {
     icon: FormatBoldOutlinedIcon,
     event: eventTypes.formatBold,
     label: "Жирный",
   },
-  italic: {
+  formatItalic: {
     icon: FormatItalicOutlinedIcon,
     event: eventTypes.formatItalic,
     label: "Курсив",
   },
-  underline: {
+  formatUnderline: {
     icon: FormatUnderlinedOutlinedIcon,
     event: eventTypes.formatUnderline,
     label: "Подчеркнутый",
   },
-  strikethrough: {
+  formatStrike: {
     icon: StrikethroughSOutlinedIcon,
     event: eventTypes.formatStrike,
     label: "Зачеркнутый",
   },
-  image: {
+  insertImage: {
     icon: ImageIcon,
     event: eventTypes.insertImage,
     label: "Вставить изображение",
   },
-  link: {
+  formatInsertLink: {
     icon: InsertLinkOutlinedIcon,
     event: eventTypes.formatInsertLink,
     label: "Вставить ссылку",
   },
-  alignLeft: {
+  formatAlignLeft: {
     icon: FormatAlignLeftOutlinedIcon,
     event: eventTypes.formatAlignLeft,
     label: "Выровнять по левому краю",
   },
-  alignCenter: {
+  formatAlignCenter: {
     icon: FormatAlignJustifyOutlinedIcon,
     event: eventTypes.formatAlignCenter,
     label: "Выровнять по центру",
   },
-  alignRight: {
+  formatAlignRight: {
     icon: FormatAlignRightOutlinedIcon,
     event: eventTypes.formatAlignRight,
     label: "Выровнять по правому краю",
   },
+  insertGraphic: {
+    icon: GraphIcon,
+    event: eventTypes.insertGraphic,
+    label: "Вставить график",
+  }
 };
 
 export default pluginsList;

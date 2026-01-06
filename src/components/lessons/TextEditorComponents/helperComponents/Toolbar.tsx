@@ -135,19 +135,20 @@ export default function Toolbar() {
   return (
     <>
       <div className="toolbar">
-        <DefaultButton button={plugins.undo} action={handlePluginClick} disabled={!canUndo}/>
-        <DefaultButton button={plugins.redo} action={handlePluginClick} disabled={!canRedo}/>
+        <DefaultButton button={plugins.formatUndo} action={handlePluginClick} disabled={!canUndo}/>
+        <DefaultButton button={plugins.formatRedo} action={handlePluginClick} disabled={!canRedo}/>
         <Dropdown buttons={[plugins.paragraph, plugins.h1, plugins.h2, plugins.quote]} action={handlePluginClick} selected={blockType}/>
-        <DefaultButton button={plugins.bulletList} action={handlePluginClick} active={blockType === "bullet"}/>
-        <DefaultButton button={plugins.numberedList} action={handlePluginClick} active={blockType === "number"}/>
-        <DefaultButton button={plugins.code} action={handlePluginClick} active={isCode}/>
-        <DefaultButton button={plugins.bold} action={handlePluginClick} active={isBold}/>
-        <DefaultButton button={plugins.italic} action={handlePluginClick} active={isItalic}/>
-        <DefaultButton button={plugins.underline} action={handlePluginClick} active={isUnderline}/>
-        <DefaultButton button={plugins.strikethrough} action={handlePluginClick} active={isStrikethrough}/>
-        <DefaultButton button={plugins.link} action={handlePluginClick} active={isLink} />
-        <Dropdown buttons={[plugins.alignLeft, plugins.alignCenter, plugins.alignRight]} action={handlePluginClick}/>
-        <DefaultButton button={plugins.image} action={handlePluginClick}/>
+        <DefaultButton button={plugins.ul} action={handlePluginClick} active={blockType === "bullet"}/>
+        <DefaultButton button={plugins.ol} action={handlePluginClick} active={blockType === "number"}/>
+        <DefaultButton button={plugins.formatCode} action={handlePluginClick} active={isCode}/>
+        <DefaultButton button={plugins.formatBold} action={handlePluginClick} active={isBold}/>
+        <DefaultButton button={plugins.formatItalic} action={handlePluginClick} active={isItalic}/>
+        <DefaultButton button={plugins.formatUnderline} action={handlePluginClick} active={isUnderline}/>
+        <DefaultButton button={plugins.formatStrike} action={handlePluginClick} active={isStrikethrough}/>
+        <DefaultButton button={plugins.formatInsertLink} action={handlePluginClick} active={isLink} />
+        <Dropdown buttons={[plugins.formatAlignLeft, plugins.formatAlignCenter, plugins.formatAlignRight]} action={handlePluginClick}/>
+        <DefaultButton button={plugins.insertImage} action={handlePluginClick}/>
+        <DefaultButton button={plugins.insertGraphic} action={handlePluginClick} />
       </div>
       {isImageModalOpen && (
         <InsertImageModal

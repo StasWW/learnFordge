@@ -4,7 +4,8 @@ import React, {type JSX} from "react";
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import type {EditorState} from "lexical";
 
-function RestoreFromLocalStoragePlugin({id}: {id?: string}): JSX.Element {
+
+export default function RestoreFromLocalStoragePlugin({id}: {id?: string}): JSX.Element {
   const [editor] = useLexicalComposerContext()
   const [serializedEditorState, setSerializedEditorState] = useLocalStorage<
     string | null

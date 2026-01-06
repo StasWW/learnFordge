@@ -20,6 +20,8 @@ import {
 } from "@lexical/rich-text";
 import { TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $wrapNodes } from "@lexical/selection";
+import {$createGraphNode} from "./nodes/graphNode.tsx";
+import { $insertNodes } from "lexical";
 
 export default function formatText(
   editor: LexicalEditor,
@@ -84,6 +86,27 @@ export default function formatText(
     }
   }
 
+  const insertGraphic = () => {
+    const editorInput = document.querySelector('div.editor-input') as HTMLDivElement;
+    const computedStyle = window.getComputedStyle(editorInput);
+    const editorWidth = parseInt(computedStyle.width) || 640;
+
+    const HORIZONTAL_PADDING = 40;
+
+    editor.update(() => {
+      const selection = $getSelection();
+
+
+      if ($isRangeSelection(selection)) {
+        const graphNode = $createGraphNode({
+          width: editorWidth - HORIZONTAL_PADDING,
+          height: 320,
+        });
+        $insertNodes([graphNode]);
+      }
+    });
+  }
+
   const formatTextCommands = new Set(["bold", "underline", "strikethrough",
     "italic", "highlight", "code", "subscript",
     "superscript", "lowercase", "uppercase", "capitalize"]);
@@ -100,6 +123,7 @@ export default function formatText(
     quote: formatQuote,
     formatInsertLink: insertLink, //TODO: add a prompt for URL
     insertImage: insertImage,
+    insertGraphic: insertGraphic,
   };
 
   const handler = commandHandlers[event];

@@ -1,4 +1,4 @@
-import React, {useRef, useCallback, useEffect, type JSX} from "react";
+import React, {useEffect, useRef, useCallback} from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection";
 import { mergeRegister } from "@lexical/utils";
@@ -12,36 +12,36 @@ import {
   KEY_DELETE_COMMAND,
   type NodeKey,
 } from "lexical";
-import { $isImageNode, RESIZE_IMAGE_COMMAND } from "./ImageNode";
+// @ts-expect-error fuck ts
+import Desmos from "desmos";
+import { $isGraphNode, RESIZE_GRAPH_COMMAND } from "./graphNode.tsx";
 import { useResizable } from "../../../../hooks/useResizable";
-import "../../../../styles/pages/Lessons/components/imageNode.css";
 
-interface ImageComponentProps {
-  src: string;
-  altText: string;
+interface GraphComponentProps {
   width?: number;
   height?: number;
   nodeKey: NodeKey;
 }
 
-export default function ImageComponent({
-  src,
-  altText,
+export default function GraphComponent({
   width,
   height,
   nodeKey,
-}: ImageComponentProps): JSX.Element {
+}: GraphComponentProps) {
   const [editor] = useLexicalComposerContext();
-  const imageRef = useRef<HTMLImageElement>(null);
+  const graphRef = useRef<HTMLDivElement>(null);
+  const calculatorRef = useRef<any>(null);
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
 
   const { isResizing, currentWidth, currentHeight, handleResizeStart } = useResizable({
     nodeKey,
     width,
     height,
-    elementRef: imageRef as React.RefObject<HTMLElement>,
-    resizeCommand: RESIZE_IMAGE_COMMAND,
-    maintainAspectRatio: true,
+    elementRef: graphRef as React.RefObject<HTMLElement>,
+    resizeCommand: RESIZE_GRAPH_COMMAND,
+    maintainAspectRatio: false,
+    minWidth: 200,
+    minHeight: 150,
   });
 
   const onDelete = useCallback(
@@ -50,7 +50,7 @@ export default function ImageComponent({
         event.preventDefault();
         editor.update(() => {
           const node = $getNodeByKey(nodeKey);
-          if ($isImageNode(node)) {
+          if ($isGraphNode(node)) {
             node.remove();
           }
         });
@@ -65,7 +65,7 @@ export default function ImageComponent({
       editor.registerCommand<MouseEvent>(
         CLICK_COMMAND,
         (event) => {
-          if (imageRef.current && imageRef.current.contains(event.target as Node)) {
+          if (graphRef.current && graphRef.current.contains(event.target as Node)) {
             if (!event.shiftKey) {
               clearSelection();
             }
@@ -89,23 +89,34 @@ export default function ImageComponent({
     );
   }, [clearSelection, editor, onDelete, setSelected]);
 
+  useEffect(() => {
+    if (graphRef.current && !calculatorRef.current) {
+      calculatorRef.current = Desmos.GraphingCalculator(graphRef.current);
+      calculatorRef.current.setExpression({ id: "graph1", latex: "y=x^2" });
+    }
+
+    return () => {
+      if (calculatorRef.current) {
+        calculatorRef.current.destroy();
+        calculatorRef.current = null;
+      }
+    };
+  }, []);
+
   const style: React.CSSProperties = {
-    width: currentWidth ? `${currentWidth}px` : undefined,
-    height: currentHeight ? `${currentHeight}px` : undefined,
-    maxWidth: "100%",
+    width: currentWidth ? `${currentWidth}px` : "640px",
+    height: currentHeight ? `${currentHeight}px` : "320px",
   };
 
   return (
     <div
-      className={`image-wrapper ${isSelected ? "selected" : ""} ${isResizing ? "resizing" : ""}`}
+      className={`graph-wrapper ${isSelected ? "selected" : ""} ${isResizing ? "resizing" : ""}`}
       draggable={!isResizing}
     >
-      <img
-        ref={imageRef}
-        src={src}
-        alt={altText}
+      <div
+        ref={graphRef}
+        className="calculator-desmos"
         style={style}
-        draggable="false"
       />
       {isSelected && (
         <>
