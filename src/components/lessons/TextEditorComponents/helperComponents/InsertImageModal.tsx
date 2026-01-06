@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import {$getSelection, $insertNodes, $isRangeSelection} from "lexical";
 import {$createImageNode} from "../nodes/ImageNode.tsx";
-import '../../../../styles/pages/Lessons/components/insertImageModal.css';
+import '../../../../styles/pages/Lessons/components/modals/insertImageModal.css';
 
 export default function InsertImageModal({onClose}: {onClose: () => void}) {
   const [editor] = useLexicalComposerContext();
@@ -11,14 +11,16 @@ export default function InsertImageModal({onClose}: {onClose: () => void}) {
   const [imageUrlError, setImageUrlError] = useState("");
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleInsert = async (src: string, altText: string = "Image") => {
+  const handleInsert = async (src?: string, altText: string = "Image") => {
     const imageSource = src;
     if (!imageSource) return;
 
     if (!imageSource.startsWith('data:image/')) {
       const isValid = await isValidImgUrl(imageSource);
-      setImageUrlError('Неверный URL изображения');
-      if (!isValid) return;
+      if (!isValid) {
+        setImageUrlError('Неверный URL изображения');
+        return;
+      }
     }
 
     editor.update(() => {
@@ -78,7 +80,6 @@ export default function InsertImageModal({onClose}: {onClose: () => void}) {
             autoFocus={true}
             onChange={(e) => {
               setImageUrl(e.target.value);
-              setImageUrlError('');
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') handleInsert(imageUrl.trim());

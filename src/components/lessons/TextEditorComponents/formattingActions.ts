@@ -26,7 +26,8 @@ import { $insertNodes } from "lexical";
 export default function formatText(
   editor: LexicalEditor,
   event: string,
-  onOpenImageModal: () => void
+  onOpenImageModal: () => void,
+  onOpenVideoModal: () => void,
 ) {
   const insertLink = () => {
     editor.dispatchCommand(TOGGLE_LINK_COMMAND, "https://");
@@ -81,9 +82,7 @@ export default function formatText(
   };
 
   const insertImage = () => {
-    if (onOpenImageModal) {
-      onOpenImageModal();
-    }
+    if (onOpenImageModal) onOpenImageModal();
   }
 
   const insertGraphic = () => {
@@ -95,6 +94,10 @@ export default function formatText(
         $insertNodes([graphNode]);
       }
     });
+  }
+
+  const insertVideo = () => {
+    if (onOpenVideoModal) onOpenVideoModal();
   }
 
   const formatTextCommands = new Set(["bold", "underline", "strikethrough",
@@ -112,8 +115,9 @@ export default function formatText(
     ol: formatNumberedList,
     quote: formatQuote,
     formatInsertLink: insertLink, //TODO: add a prompt for URL
-    insertImage: insertImage,
-    insertGraphic: insertGraphic,
+    insertImage,
+    insertGraphic,
+    insertVideo,
   };
 
   const handler = commandHandlers[event];

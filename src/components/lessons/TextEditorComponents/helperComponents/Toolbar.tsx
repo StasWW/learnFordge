@@ -22,9 +22,11 @@ import {$isListNode, ListNode} from "@lexical/list";
 import {$isHeadingNode} from "@lexical/rich-text";
 import InsertImageModal from "./InsertImageModal.tsx";
 import FloatingLinkEditor from "./FloatingLinkEditor.tsx";
+import InsertVideoModal from "./InsertVideoModal.tsx";
 
 export default function Toolbar() {
   const [editor] = useLexicalComposerContext();
+
   const plugins = pluginsList;
 
   const [canUndo, setCanUndo] = useState(false);
@@ -36,10 +38,17 @@ export default function Toolbar() {
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
   const [isLink, setIsLink] = useState(false);
+
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const handlePluginClick = (event: string) => {
-    formatText(editor, event, () => setIsImageModalOpen(true));
+    formatText(
+      editor,
+      event,
+      () => setIsImageModalOpen(true),
+      () => setIsVideoModalOpen(true),
+    );
   }
 
   const updateToolbar = useCallback(() => {
@@ -134,6 +143,7 @@ export default function Toolbar() {
 
   return (
     <>
+      {/*BUTTONS*/}
       <div className="toolbar">
         <DefaultButton button={plugins.formatUndo} action={handlePluginClick} disabled={!canUndo}/>
         <DefaultButton button={plugins.formatRedo} action={handlePluginClick} disabled={!canRedo}/>
@@ -149,14 +159,25 @@ export default function Toolbar() {
         <Dropdown buttons={[plugins.formatAlignLeft, plugins.formatAlignCenter, plugins.formatAlignRight]} action={handlePluginClick}/>
         <DefaultButton button={plugins.insertImage} action={handlePluginClick}/>
         <DefaultButton button={plugins.insertGraphic} action={handlePluginClick} />
+        <DefaultButton  button={plugins.insertVideo} action={handlePluginClick} />
       </div>
-      {isImageModalOpen && (
+
+      {/*MODALS*/}
+      {isImageModalOpen && createPortal(
         <InsertImageModal
           onClose={() => setIsImageModalOpen(false)}
-        />
+        />,
+        document.body
       )}
       {isLink && createPortal(
         <FloatingLinkEditor editor={editor} />,
+        document.body
+      )}
+      {isVideoModalOpen && createPortal(
+        <InsertVideoModal
+          onClose={() => setIsVideoModalOpen(false)}
+          editor={editor}
+        />,
         document.body
       )}
     </>

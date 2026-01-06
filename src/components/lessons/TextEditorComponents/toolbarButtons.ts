@@ -17,6 +17,7 @@ import FormatAlignLeftOutlinedIcon from "../../../assets/images/toolbarIcons/tex
 import FormatAlignJustifyOutlinedIcon from "../../../assets/images/toolbarIcons/text-center.svg";
 import FormatAlignRightOutlinedIcon from "../../../assets/images/toolbarIcons/text-right.svg";
 import GraphIcon from "../../../assets/images/toolbarIcons/desmos.png";
+import YoutubeIcon from "../../../assets/images/toolbarIcons/youtube.svg";
 
 import type {PluginItem} from "../../../types/lessonTypes.ts";
 
@@ -40,7 +41,7 @@ export const eventTypes = {
   formatAlignRight: "right",
   insertImage: "insertImage",
   insertGraphic: 'insertGraphic',
-
+  insertVideo: 'insertVideo',
 };
 
 const pluginsList: Record<keyof typeof eventTypes, PluginItem> = {
@@ -138,6 +139,11 @@ const pluginsList: Record<keyof typeof eventTypes, PluginItem> = {
     icon: GraphIcon,
     event: eventTypes.insertGraphic,
     label: "Вставить график",
+  },
+  insertVideo: {
+    icon: YoutubeIcon,
+    event: eventTypes.insertVideo,
+    label: 'Вставить видео',
   }
 };
 

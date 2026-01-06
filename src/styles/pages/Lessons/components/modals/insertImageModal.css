@@ -1,7 +1,6 @@
-.insert-image-modal {
-    max-width: 625px;
+.insert-video-modal {
+    max-width: 700px;
     width: 95vw;
-    height: 50vh;
     display: flex;
     flex-direction: column;
 

@@ -26,3 +26,4 @@ dist-ssr
 # Folder where icons that are found all over the Internet are stored
 # To potentially be used later in the project
 ./iconsFromExamples
+/.env
