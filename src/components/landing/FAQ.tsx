@@ -70,9 +70,6 @@ export default function FAQ() {
         <header className="faq-header">
           <span className="section-kicker">FAQ</span>
           <h2 id="faq-heading">Ответы на популярные вопросы</h2>
-          <p className="faq-subtitle">
-            Коротко о форматах, тестах, оплате и поддержке в learnFordge.
-          </p>
         </header>
         <div className="faq-list" role="list">
           {faqData.map((item) => {

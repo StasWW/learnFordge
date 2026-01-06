@@ -1,6 +1,6 @@
 .features-carousel {
     position: relative;
-    padding: 3rem 0 3.75rem;
+    padding: 3.6rem 0 4.4rem;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     width: 100vw;
@@ -11,13 +11,19 @@
 
 .features-carousel .carousel-header {
     max-width: 1280px;
-    margin: 0 auto 0.5rem;
+    margin: 0 auto 1.9rem;
     padding: 0 clamp(1rem, 4vw, 2.5rem);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
     text-align: center;
+}
+
+.features-carousel .carousel-title {
+    display: grid;
+    gap: 0.65rem;
+    max-width: 780px;
 }
 
 .features-carousel .carousel-title h2 {
@@ -26,8 +32,9 @@
 }
 
 .features-carousel .carousel-title p {
-    margin: 0.25rem 0 0;
+    margin: 0;
     color: var(--muted-text);
+    line-height: 1.7;
 }
 
 .features-carousel .carousel-viewport {
