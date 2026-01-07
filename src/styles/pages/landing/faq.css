@@ -14,9 +14,9 @@
     z-index: 1;
     padding: clamp(1.35rem, 3vw, 2rem);
     border-radius: 24px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    background: var(--landing-faq-panel-bg);
     border: 1px solid var(--glass-border-strong);
-    box-shadow: 0 24px 80px rgba(2, 8, 20, 0.65);
+    box-shadow: var(--landing-faq-panel-shadow);
     backdrop-filter: blur(var(--blur-amount));
 }
 
@@ -26,7 +26,7 @@
     gap: 0.35rem;
     padding: 0.55rem 1.05rem;
     border-radius: 999px;
-    background: rgba(124, 247, 210, 0.12);
+    background: var(--section-kicker-bg);
     color: var(--accent);
     font-weight: 700;
     font-size: 1.1rem;
@@ -60,11 +60,11 @@
 }
 
 .faq-item {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    background: var(--landing-faq-item-bg);
     border: 1px solid var(--glass-border-strong);
     border-radius: 16px;
     backdrop-filter: blur(var(--blur-amount));
-    box-shadow: 0 8px 26px rgba(2, 8, 20, 0.62);
+    box-shadow: var(--landing-faq-item-shadow);
     overflow: hidden;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     position: relative;
@@ -76,7 +76,7 @@
     position: absolute;
     inset: -1px;
     border-radius: 18px;
-    background: linear-gradient(135deg, rgba(124, 247, 210, 0.12), rgba(108, 186, 255, 0.12), rgba(199, 243, 109, 0.08));
+    background: var(--landing-faq-accent-gradient);
     opacity: 0;
     transition: opacity 0.25s ease;
     pointer-events: none;
@@ -89,11 +89,11 @@
 
 .faq-item:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(3, 10, 24, 0.7);
+    box-shadow: var(--landing-faq-item-shadow-hover);
 }
 
 .faq-item--open {
-    border-color: rgba(124, 247, 210, 0.5);
+    border-color: var(--landing-faq-open-border);
 }
 
 .faq-item--open::before,
@@ -148,27 +148,27 @@
     bottom: 0.55rem;
     width: 3px;
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(124, 247, 210, 0.9), rgba(108, 186, 255, 0.75));
-    box-shadow: 0 3px 14px rgba(2, 8, 20, 0.35);
+    background: var(--landing-faq-bar-gradient);
+    box-shadow: var(--landing-faq-bar-shadow);
 }
 
 .faq-item--open .faq-question-text::before {
-    background: linear-gradient(180deg, rgba(124, 247, 210, 1), rgba(108, 186, 255, 0.95));
-    box-shadow: 0 4px 18px rgba(124, 247, 210, 0.32);
+    background: var(--landing-faq-bar-gradient-open);
+    box-shadow: var(--landing-faq-bar-shadow-open);
 }
 
 .faq-chevron {
     flex-shrink: 0;
     color: var(--muted-text);
     transition: transform 0.3s ease, background 0.2s ease;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--landing-faq-chevron-bg);
     border-radius: 50%;
     padding: 0.3rem;
 }
 
 .faq-item--open .faq-chevron {
     transform: rotate(180deg);
-    background: rgba(124, 247, 210, 0.14);
+    background: var(--landing-faq-chevron-bg-open);
 }
 
 .faq-answer {
@@ -182,7 +182,7 @@
 .faq-item--open .faq-answer {
     grid-template-rows: 1fr;
     padding: 0.5rem 1.35rem 1.25rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--landing-faq-divider);
 }
 
 .faq-answer p {
