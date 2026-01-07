@@ -75,7 +75,6 @@
     --footer-text: #3d3654;
     --footer-separator: rgba(139, 92, 246, 0.15);
 
-    /* Button gradient colors - more refined and less candy-like */
     --btn-gradient-start: #6366f1;
     --btn-gradient-mid: #8b5cf6;
     --btn-gradient-end: #a78bfa;
@@ -177,7 +176,6 @@
     --footer-text: #d6dfed;
     --footer-separator: rgba(255, 255, 255, 0.12);
 
-    /* Button gradient colors for dark theme - neon style */
     --btn-gradient-start: #7cf7d2;
     --btn-gradient-mid: #6cbaff;
     --btn-gradient-end: #c7f36d;
@@ -280,7 +278,6 @@
         --footer-text: #d6dfed;
         --footer-separator: rgba(255, 255, 255, 0.12);
 
-        /* Button gradient colors for dark theme - neon style */
         --btn-gradient-start: #7cf7d2;
         --btn-gradient-mid: #6cbaff;
         --btn-gradient-end: #c7f36d;
