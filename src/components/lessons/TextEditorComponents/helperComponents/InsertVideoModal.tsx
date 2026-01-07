@@ -3,12 +3,15 @@ import {useState} from "react";
 import '../../../../styles/pages/Lessons/components/modals/insertVideoModal.css';
 import {$getSelection, $insertNodes, $isRangeSelection, type LexicalEditor} from "lexical";
 import {$createYouTubeNode} from "../nodes/YoutubeNode.tsx";
+import {$createRutubeNode} from "../nodes/RutubeNode.tsx";
 
 export default function InsertVideoModal({onClose, editor}: {onClose: () => void, editor: LexicalEditor}) {
   const [videoUrl, setVideoUrl] = useState('');
   const [errorText, setErrorText] = useState('');
 
   const handleInsert = (url: string) => {
+    setErrorText('');
+
     if (isYoutubeUrl(videoUrl)) {
       editor.update(() => {
         const selection = $getSelection();
@@ -28,7 +31,23 @@ export default function InsertVideoModal({onClose, editor}: {onClose: () => void
         $insertNodes([ytNode]);
       })
     } else if (isRutubeUrl(videoUrl)) {
-      confirm('Долбоеб?'); // TODO: add Rutube support
+      editor.update(() => {
+        const selection = $getSelection();
+
+        if (!$isRangeSelection(selection)) {
+          setErrorText('Пожалуйста, выберите место для вставки видео');
+          return;
+        }
+
+        const rutubeId = parseRutubeId(url);
+        if (!rutubeId) {
+          setErrorText('Неверная ссылка на RuTube видео');
+          return;
+        }
+
+        const rutubeNode = $createRutubeNode(rutubeId);
+        $insertNodes([rutubeNode]);
+      })
     } else {
       setErrorText('Данный формат видео не поддерживается');
       return;
@@ -88,4 +107,11 @@ function parseYoutubeId (url: string): string | null {
 function isRutubeUrl (url: string): boolean {
   const serverName = url.split('/')[2];
   return serverName === 'rutube.ru'
+}
+
+function parseRutubeId (url: string): string | null {
+  const id = url.split('/')[4];
+  console.log(id);
+  if (id) return id;
+  return null;
 }

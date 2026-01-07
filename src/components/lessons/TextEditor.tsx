@@ -18,6 +18,8 @@ import { GraphNode } from "./TextEditorComponents/nodes/graphNode.tsx";
 import GraphPlugin from "./TextEditorComponents/plugins/GraphPlugin.tsx";
 import { YouTubeNode } from "./TextEditorComponents/nodes/YoutubeNode.tsx";
 import YouTubePlugin from "./TextEditorComponents/plugins/YoutubePlugin.tsx";
+import { RutubeNode } from './TextEditorComponents/nodes/RutubeNode.tsx';
+import RutubePlugin from './TextEditorComponents/plugins/RutubePlugin.tsx';
 import '../../styles/pages/Lessons/components/lexicalEditorTheme.css';
 // import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
 // import {useRef} from "react";
@@ -38,6 +40,7 @@ export default function TextEditor () {
       ImageNode,
       GraphNode,
       YouTubeNode,
+      RutubeNode,
     ],
     onError: (error: Error) => console.warn(error),
   }
@@ -59,6 +62,7 @@ export default function TextEditor () {
       <ImagesPlugin />
       <GraphPlugin />
       <YouTubePlugin />
+      <RutubePlugin />
     </LexicalComposer>
   )
 }

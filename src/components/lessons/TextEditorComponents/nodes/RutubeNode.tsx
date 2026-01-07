@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import type {
   DOMConversionMap,
   DOMConversionOutput,
@@ -25,7 +17,7 @@ import {
   type SerializedDecoratorBlockNode,
 } from '@lexical/react/LexicalDecoratorBlockNode';
 
-type YouTubeComponentProps = Readonly<{
+type RutubeComponentProps = Readonly<{
   className: Readonly<{
     base: string;
     focus: string;
@@ -36,12 +28,12 @@ type YouTubeComponentProps = Readonly<{
 }>;
 
 // eslint-disable-next-line react-refresh/only-export-components
-function YouTubeComponent({
-                            className,
-                            format,
-                            nodeKey,
-                            videoID,
-                          }: YouTubeComponentProps) {
+function RutubeComponent({
+  className,
+  format,
+  nodeKey,
+  videoID,
+}: RutubeComponentProps) {
   return (
     <BlockWithAlignableContents
       className={className}
@@ -50,52 +42,51 @@ function YouTubeComponent({
       <iframe
         width="560"
         height="315"
-        src={`https://www.youtube-nocookie.com/embed/${videoID}`}
+        src={`https://rutube.ru/play/embed/${videoID}/`}
         style={{border: 'none'}}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen={true}
-        title="YouTube video"
+        title="Rutube video"
       />
     </BlockWithAlignableContents>
   );
 }
 
-export type SerializedYouTubeNode = Spread<
+export type SerializedRutubeNode = Spread<
   {
     videoID: string;
   },
   SerializedDecoratorBlockNode
 >;
 
-function $convertYoutubeElement(
+function $convertRutubeElement(
   domNode: HTMLElement,
 ): null | DOMConversionOutput {
-  const videoID = domNode.getAttribute('data-lexical-youtube');
+  const videoID = domNode.getAttribute('data-lexical-rutube');
   if (videoID) {
-    const node = $createYouTubeNode(videoID);
+    const node = $createRutubeNode(videoID);
     return {node};
   }
   return null;
 }
 
-export class YouTubeNode extends DecoratorBlockNode {
+export class RutubeNode extends DecoratorBlockNode {
   __id: string;
 
   static getType(): string {
-    return 'youtube';
+    return 'rutube';
   }
 
-  static clone(node: YouTubeNode): YouTubeNode {
-    return new YouTubeNode(node.__id, node.__format, node.__key);
+  static clone(node: RutubeNode): RutubeNode {
+    return new RutubeNode(node.__id, node.__format, node.__key);
   }
 
-  static importJSON(serializedNode: SerializedYouTubeNode): YouTubeNode {
-    return $createYouTubeNode(serializedNode.videoID).updateFromJSON(
+  static importJSON(serializedNode: SerializedRutubeNode): RutubeNode {
+    return $createRutubeNode(serializedNode.videoID).updateFromJSON(
       serializedNode,
     );
   }
 
-  exportJSON(): SerializedYouTubeNode {
+  exportJSON(): SerializedRutubeNode {
     return {
       ...super.exportJSON(),
       videoID: this.__id,
@@ -109,31 +100,31 @@ export class YouTubeNode extends DecoratorBlockNode {
 
   exportDOM(): DOMExportOutput {
     const element = document.createElement('iframe');
-    element.setAttribute('data-lexical-youtube', this.__id);
+    element.setAttribute('data-lexical-rutube', this.__id);
     element.setAttribute('width', '560');
     element.setAttribute('height', '315');
     element.setAttribute(
       'src',
-      `https://www.youtube-nocookie.com/embed/${this.__id}`,
+      `https://rutube.ru/play/embed/${this.__id}/`,
     );
     element.setAttribute('frameborder', '0');
     element.setAttribute(
       'allow',
-      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',
+      'clipboard-write; autoplay',
     );
     element.setAttribute('allowfullscreen', 'true');
-    element.setAttribute('title', 'YouTube video');
+    element.setAttribute('title', 'Rutube video');
     return {element};
   }
 
   static importDOM(): DOMConversionMap | null {
     return {
       iframe: (domNode: HTMLElement) => {
-        if (!domNode.hasAttribute('data-lexical-youtube')) {
+        if (!domNode.hasAttribute('data-lexical-rutube')) {
           return null;
         }
         return {
-          conversion: $convertYoutubeElement,
+          conversion: $convertRutubeElement,
           priority: 1,
         };
       },
@@ -154,7 +145,7 @@ export class YouTubeNode extends DecoratorBlockNode {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _includeDirectionless?: false | undefined,
   ): string {
-    return `https://www.youtube.com/watch?v=${this.__id}`;
+    return `https://rutube.ru/video/${this.__id}/`;
   }
 
   decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
@@ -164,7 +155,7 @@ export class YouTubeNode extends DecoratorBlockNode {
       focus: embedBlockTheme.focus || '',
     };
     return (
-      <YouTubeComponent
+      <RutubeComponent
         className={className}
         format={this.__format}
         nodeKey={this.getKey()}
@@ -174,12 +165,13 @@ export class YouTubeNode extends DecoratorBlockNode {
   }
 }
 
-export function $createYouTubeNode(videoID: string): YouTubeNode {
-  return new YouTubeNode(videoID);
+export function $createRutubeNode(videoID: string): RutubeNode {
+  return new RutubeNode(videoID);
 }
 
-export function $isYouTubeNode(
-  node: YouTubeNode | LexicalNode | null | undefined,
-): node is YouTubeNode {
-  return node instanceof YouTubeNode;
+export function $isRutubeNode(
+  node: RutubeNode | LexicalNode | null | undefined,
+): node is RutubeNode {
+  return node instanceof RutubeNode;
 }
+
