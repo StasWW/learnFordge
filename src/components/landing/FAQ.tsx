@@ -40,7 +40,7 @@ const faqData: FAQItem[] = [
 ];
 
 export default function FAQ() {
-  const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+  const [openItems, setOpenItems] = useState<Set<string>>(() => new Set());
 
   const toggleItem = useCallback((id: string) => {
     setOpenItems((prev) => {
@@ -54,16 +54,6 @@ export default function FAQ() {
     });
   }, []);
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent, id: string) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleItem(id);
-      }
-    },
-    [toggleItem],
-  );
-
   return (
     <section className="faq-section" id="faq" aria-labelledby="faq-heading">
       <div className="faq-container">
@@ -74,6 +64,8 @@ export default function FAQ() {
         <div className="faq-list" role="list">
           {faqData.map((item) => {
             const isOpen = openItems.has(item.id);
+            const questionId = `faq-question-${item.id}`;
+            const answerId = `faq-answer-${item.id}`;
             return (
               <div
                 key={item.id}
@@ -84,9 +76,9 @@ export default function FAQ() {
                   className="faq-question"
                   type="button"
                   onClick={() => toggleItem(item.id)}
-                  onKeyDown={(e) => handleKeyDown(e, item.id)}
+                  id={questionId}
                   aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${item.id}`}
+                  aria-controls={answerId}
                 >
                   <div className="faq-question-text">
                     <span>{item.question}</span>
@@ -107,10 +99,11 @@ export default function FAQ() {
                   </svg>
                 </button>
                 <div
-                  id={`faq-answer-${item.id}`}
+                  id={answerId}
                   className="faq-answer"
                   role="region"
                   aria-hidden={!isOpen}
+                  aria-labelledby={questionId}
                 >
                   <p>{item.answer}</p>
                 </div>

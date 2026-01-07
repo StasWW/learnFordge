@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+﻿import { useCallback, useEffect, useMemo, useRef, useState, useId, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import { CloudIcon } from "../../assets/images/featureIcons/CloudIcon";
-import type { featureProps } from "../../types/landingTypes";
+import type { FeatureItem } from "../../types/landingTypes";
 import { AnalyticsIcon } from "../../assets/images/featureIcons/AnalyticsIcon";
 import { LessonsIcon } from "../../assets/images/featureIcons/LessonsIcon";
 import { VideoMeetingIcon } from "../../assets/images/featureIcons/VideoMeetingIcon";
 
-const features: featureProps[] = [
+const FEATURES: FeatureItem[] = [
     {
         name: "Облако",
         description: "Храните курсы и материалы в одном месте, без забот о бэкапах.",
@@ -32,8 +32,25 @@ const features: featureProps[] = [
     },
 ];
 
+const DEFAULT_GAP_PX = 20;
+const DEFAULT_CARD_WIDTH = 420;
 const AUTO_SPEED_PX_PER_SEC = 36;
 const STEP_TRANSITION = "transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1)";
+
+const getTrackGap = (track: HTMLElement | null) => {
+    if (!track || typeof window === "undefined") {
+        return DEFAULT_GAP_PX;
+    }
+    const styles = window.getComputedStyle(track);
+    const rawGap = styles.columnGap || styles.gap;
+    const parsed = Number.parseFloat(rawGap);
+    return Number.isFinite(parsed) ? parsed : DEFAULT_GAP_PX;
+};
+
+const getCardWidth = (track: HTMLElement | null) => {
+    const firstCard = track?.querySelector<HTMLElement>(".feature");
+    return firstCard?.offsetWidth ?? DEFAULT_CARD_WIDTH;
+};
 
 export default function FeaturesCarousel() {
     const trackRef = useRef<HTMLDivElement | null>(null);
@@ -43,32 +60,48 @@ export default function FeaturesCarousel() {
     const [disableTransition, setDisableTransition] = useState(false);
     const [isStepAnimating, setIsStepAnimating] = useState(false);
     const [offset, setOffset] = useState(0);
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
     const offsetRef = useRef(0);
     const dragStartRef = useRef(0);
     const lastTimeRef = useRef<number | null>(null);
     const stepTimerRef = useRef<number | null>(null);
     const isStepAnimatingRef = useRef(false);
+    const trackId = useId();
 
     const loopedFeatures = useMemo(
-        () => Array.from({ length: repeatCount }, () => features).flat(),
+        () => Array.from({ length: repeatCount }, () => FEATURES).flat(),
         [repeatCount],
     );
 
-    const getBaseWidth = () => {
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+        handleChange();
+
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener("change", handleChange);
+            return () => mediaQuery.removeEventListener("change", handleChange);
+        }
+
+        mediaQuery.addListener(handleChange);
+        return () => mediaQuery.removeListener(handleChange);
+    }, []);
+
+    const getBaseWidth = useCallback(() => {
         const track = trackRef.current;
         if (!track) return 0;
 
         const cards = track.querySelectorAll<HTMLElement>(".feature");
-        if (cards.length > features.length) {
+        if (cards.length > FEATURES.length) {
             const firstCard = cards[0];
-            const nextCycleCard = cards[features.length];
+            const nextCycleCard = cards[FEATURES.length];
             const measured = nextCycleCard.offsetLeft - firstCard.offsetLeft;
             if (measured > 0) return measured;
         }
 
         return track.scrollWidth / Math.max(1, repeatCount);
-    };
+    }, [repeatCount]);
 
     const runStepAnimation = () => {
         if (stepTimerRef.current) {
@@ -83,7 +116,7 @@ export default function FeaturesCarousel() {
         }, 360);
     };
 
-    const applyOffset = (value: number, options?: { skipWrap?: boolean; onWrap?: (shift: number) => void }) => {
+    const applyOffset = useCallback((value: number, options?: { skipWrap?: boolean; onWrap?: (shift: number) => void }) => {
         const baseWidth = getBaseWidth();
         if (!baseWidth) return;
 
@@ -95,7 +128,7 @@ export default function FeaturesCarousel() {
         let jumped = false;
 
         if (!options?.skipWrap) {
-            // Keep the virtual scroll inside the middle copies so recentering is invisible.
+            //карусель виртуально крутится чтобы при переносе мышкой или кнопкой не было скачков
             const minOffset = baseWidth;
             const maxOffset = Math.max(minOffset, trackWidth - baseWidth - viewportWidth);
 
@@ -127,19 +160,18 @@ export default function FeaturesCarousel() {
 
         offsetRef.current = next;
         setOffset(next);
-    };
+    }, [getBaseWidth, repeatCount]);
 
     useEffect(() => {
         const computeRepeat = () => {
             const track = trackRef.current;
-            const firstCard = track?.querySelector<HTMLElement>(".feature");
-            const gap = 20;
-            const cardWidth = firstCard?.offsetWidth ?? 420;
+            const gap = getTrackGap(track);
+            const cardWidth = getCardWidth(track);
             const totalCardWidth = cardWidth + gap;
-            const baseWidth = features.length * totalCardWidth;
+            const baseWidth = FEATURES.length * totalCardWidth;
             const viewportWidth = track?.parentElement?.clientWidth ?? window.innerWidth;
 
-            // Keep an extra-wide buffer so animated steps never approach the ends.
+            //если уменьшить количество карточек в каручели - они будут багаться при прокрутке
             const repeatsForBuffer = Math.ceil((viewportWidth + 5 * baseWidth) / baseWidth);
             const repeats = Math.max(6, repeatsForBuffer);
             setRepeatCount(repeats);
@@ -151,16 +183,14 @@ export default function FeaturesCarousel() {
     }, []);
 
     useEffect(() => {
-        // Adjust offset if repeat count changed
         applyOffset(offsetRef.current);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [repeatCount]);
+    }, [applyOffset, repeatCount]);
 
     useEffect(() => {
         let frame: number;
         const step = (ts: number) => {
             if (isStepAnimatingRef.current) {
-                // Keep the timeline in sync while the step animation runs so auto-scroll doesn't jump afterwards.
+                //ударжание синхронизации прокрутки при ручном перемещении карусели
                 lastTimeRef.current = ts;
                 frame = requestAnimationFrame(step);
                 return;
@@ -172,7 +202,7 @@ export default function FeaturesCarousel() {
             const delta = ts - lastTimeRef.current;
             lastTimeRef.current = ts;
 
-            if (!isPaused && !isDragging) {
+            if (!isPaused && !isDragging && !prefersReducedMotion) {
                 const move = (AUTO_SPEED_PX_PER_SEC * delta) / 1000;
                 applyOffset(offsetRef.current + move);
             }
@@ -182,15 +212,14 @@ export default function FeaturesCarousel() {
 
         frame = requestAnimationFrame(step);
         return () => cancelAnimationFrame(frame);
-    }, [isPaused, isDragging, repeatCount]);
+    }, [applyOffset, isPaused, isDragging, prefersReducedMotion, repeatCount]);
 
     const scrollByCard = (direction: -1 | 1) => {
         const track = trackRef.current;
         if (!track) return;
 
-        const firstCard = track.querySelector<HTMLElement>(".feature");
-        const gap = 20;
-        const cardWidth = firstCard?.offsetWidth ?? 420;
+        const gap = getTrackGap(track);
+        const cardWidth = getCardWidth(track);
         const step = (cardWidth + gap) * direction;
 
         const baseWidth = getBaseWidth();
@@ -201,7 +230,7 @@ export default function FeaturesCarousel() {
         const minOffset = baseWidth;
         const maxOffset = Math.max(minOffset, trackWidth - baseWidth - viewportWidth);
 
-        // Rebase into the safe middle copy so the animated step never crosses wrap boundaries.
+        //избегание скрытых скачков
         let current = offsetRef.current;
         let target = current + step;
         const needsRebase = target < minOffset || target > maxOffset;
@@ -236,7 +265,7 @@ export default function FeaturesCarousel() {
         applyOffset(target, { skipWrap: true });
     };
 
-    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
         if (!trackRef.current) return;
         trackRef.current.setPointerCapture(e.pointerId);
         setIsDragging(true);
@@ -244,7 +273,7 @@ export default function FeaturesCarousel() {
         dragStartRef.current = e.clientX + offsetRef.current;
     };
 
-    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const handlePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
         if (!isDragging) return;
         applyOffset(dragStartRef.current - e.clientX, {
             onWrap: (shift) => {
@@ -253,7 +282,7 @@ export default function FeaturesCarousel() {
         });
     };
 
-    const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const endDrag = (e: ReactPointerEvent<HTMLDivElement>) => {
         if (!trackRef.current || !isDragging) return;
         if (trackRef.current.hasPointerCapture(e.pointerId)) {
             trackRef.current.releasePointerCapture(e.pointerId);
@@ -265,7 +294,7 @@ export default function FeaturesCarousel() {
 
     const trackStyle: CSSProperties = {
         transform: `translateX(${-offset}px)`,
-        transition: disableTransition || isDragging ? "none" : isStepAnimating ? STEP_TRANSITION : "none",
+        transition: disableTransition || isDragging || prefersReducedMotion ? "none" : isStepAnimating ? STEP_TRANSITION : "none",
     };
 
     useEffect(
@@ -289,7 +318,9 @@ export default function FeaturesCarousel() {
             <div className="carousel-viewport">
                 <div
                     className={`carousel-track ${isDragging ? "dragging" : ""}`}
+                    id={trackId}
                     ref={trackRef}
+                    role="list"
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => !isDragging && setIsPaused(false)}
                     onPointerDown={handlePointerDown}
@@ -312,16 +343,14 @@ export default function FeaturesCarousel() {
                 <div className="carousel-fade left" aria-hidden="true" />
                 <div className="carousel-fade right" aria-hidden="true" />
             </div>
-            <CarouselControls onPrev={() => scrollByCard(-1)} onNext={() => scrollByCard(1)} />
+            <CarouselControls onPrev={() => scrollByCard(-1)} onNext={() => scrollByCard(1)} trackId={trackId} />
         </section>
     );
 }
 
-function Feature({ name, description, icon, iconSize, backgroundColor }: featureProps & { iconSize: number }) {
-    const IconComp = icon as React.ComponentType<{ size: number | string; backgroundColor?: string }>;
-
+function Feature({ name, description, icon: IconComp, iconSize, backgroundColor }: FeatureItem & { iconSize: number }) {
     return (
-        <div className="feature">
+        <div className="feature" role="listitem">
             <IconComp size={iconSize} backgroundColor={backgroundColor} />
             <h3>{name}</h3>
             <p>{description}</p>
@@ -329,13 +358,14 @@ function Feature({ name, description, icon, iconSize, backgroundColor }: feature
     );
 }
 
-function CarouselControls({ onPrev, onNext }: { onPrev: () => void; onNext: () => void }) {
+function CarouselControls({ onPrev, onNext, trackId }: { onPrev: () => void; onNext: () => void; trackId: string }) {
     return (
         <div className="carousel-controls">
             <button
                 className="carousel-btn carousel-btn-prev"
                 type="button"
                 aria-label="Перелистнуть назад"
+                aria-controls={trackId}
                 onClick={onPrev}
             >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -346,6 +376,7 @@ function CarouselControls({ onPrev, onNext }: { onPrev: () => void; onNext: () =
                 className="carousel-btn carousel-btn-next"
                 type="button"
                 aria-label="Перелистнуть вперёд"
+                aria-controls={trackId}
                 onClick={onNext}
             >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

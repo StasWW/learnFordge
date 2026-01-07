@@ -1,3 +1,5 @@
+import GlowButton from './GlowButton';
+
 export default function Header() {
   return (
     <header className="hero" id="home">
@@ -9,9 +11,9 @@ export default function Header() {
           <p className="slogan">Создавайте и запускайте обучение быстрее, чем когда-либо.</p>
           <div className="hero-actions">
             <div className="cta-buttons">
-              <button className="btn-primary" type="button">
+              <GlowButton className="btn-primary" type="button">
                 Попробовать
-              </button>
+              </GlowButton>
             </div>
           </div>
         </div>

@@ -16,6 +16,22 @@ const OPTION_LABELS: Record<ThemeMode, string> = {
 const getSystemTheme = (): Theme =>
   window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
+const useSystemTheme = () => {
+  const [systemTheme, setSystemTheme] = useState<Theme>(() => getSystemTheme());
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (event: MediaQueryListEvent) => {
+      setSystemTheme(event.matches ? 'dark' : 'light');
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  return systemTheme;
+};
+
 const migrateLegacyTheme = (): Theme | null => {
   const legacy = localStorage.getItem(LEGACY_THEME_STORAGE_KEY);
   if (legacy === 'light' || legacy === 'dark') {
@@ -26,23 +42,23 @@ const migrateLegacyTheme = (): Theme | null => {
   return null;
 };
 
-const getInitialTheme = (): { theme: Theme; mode: ThemeMode } => {
+const getInitialMode = (): ThemeMode => {
   const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
 
-  if (storedTheme === 'light' || storedTheme === 'dark') {
-    return { theme: storedTheme, mode: storedTheme };
+  if (storedTheme === 'system') {
+    return 'system';
   }
 
-  if (storedTheme === 'system') {
-    return { theme: getSystemTheme(), mode: 'system' };
+  if (storedTheme === 'light' || storedTheme === 'dark') {
+    return storedTheme;
   }
 
   const legacyTheme = migrateLegacyTheme();
   if (legacyTheme) {
-    return { theme: legacyTheme, mode: legacyTheme };
+    return legacyTheme;
   }
 
-  return { theme: getSystemTheme(), mode: 'system' };
+  return 'system';
 };
 
 const applyTheme = (theme: Theme) => {
@@ -51,7 +67,9 @@ const applyTheme = (theme: Theme) => {
 
 export default function ThemeToggle() {
   const selectId = 'theme-select';
-  const [{ theme, mode }, setThemeState] = useState(getInitialTheme);
+  const [mode, setMode] = useState<ThemeMode>(getInitialMode);
+  const systemTheme = useSystemTheme();
+  const theme = mode === 'system' ? systemTheme : mode;
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -60,42 +78,11 @@ export default function ThemeToggle() {
   }, [theme]);
 
   useEffect(() => {
-    if (mode === 'system') {
-      localStorage.setItem(THEME_STORAGE_KEY, 'system');
-      const systemTheme = getSystemTheme();
-      if (systemTheme !== theme) {
-        setThemeState({ theme: systemTheme, mode: 'system' });
-      }
-      return;
-    }
-
     localStorage.setItem(THEME_STORAGE_KEY, mode);
-  }, [mode, theme]);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      setThemeState((current) => {
-        if (current.mode !== 'system') {
-          return current;
-        }
-        return { theme: event.matches ? 'dark' : 'light', mode: 'system' };
-      });
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
+  }, [mode]);
 
   const handleModeChange = (value: ThemeMode) => {
-    if (value === 'system') {
-      setThemeState({ theme: getSystemTheme(), mode: 'system' });
-      setIsOpen(false);
-      return;
-    }
-    setThemeState({ theme: value, mode: value });
+    setMode(value);
     setIsOpen(false);
   };
 
