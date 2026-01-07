@@ -98,7 +98,6 @@ function parseYoutubeId (url: string): string | null {
     const urlObj = new URL(url);
     return urlObj.searchParams.get('v');
   } else if (serverName === 'youtu.be') {
-    console.log(url.split('/'));
     return url.split('/').pop()?.split('?')[0] || null;
   }
   return null;
@@ -111,7 +110,6 @@ function isRutubeUrl (url: string): boolean {
 
 function parseRutubeId (url: string): string | null {
   const id = url.split('/')[4];
-  console.log(id);
   if (id) return id;
   return null;
 }
