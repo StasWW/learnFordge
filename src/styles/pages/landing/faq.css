@@ -47,8 +47,7 @@
     margin: 0.4rem 0 0.75rem;
 }
 
-.faq-header p,
-.faq-subtitle {
+.faq-header p {
     margin: 0;
     color: var(--muted-text);
     font-size: 1.05rem;
