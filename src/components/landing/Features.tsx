@@ -8,7 +8,6 @@ interface FeatureItem {
   icon: ComponentType<IconProps>;
 }
 
-// Простые SVG иконки inline
 const VideoIcon = ({ size = 24 }: IconProps): JSX.Element => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <polygon points="23 7 16 12 23 17 23 7" />
