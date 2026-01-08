@@ -99,7 +99,7 @@
     font-weight: 800;
     color: var(--btn-text-color, #04111f);
     background:
-        radial-gradient(120% 120% at var(--btn-glow-x) var(--btn-glow-y), rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.25) 32%, rgba(255, 255, 255, 0) 60%),
+        radial-gradient(120% 120% at var(--btn-glow-x) var(--btn-glow-y), var(--btn-glow-strong, rgba(255, 255, 255, 0.55)) 0%, var(--btn-glow-soft, rgba(255, 255, 255, 0.25)) 32%, rgba(255, 255, 255, 0) 60%),
         linear-gradient(120deg, var(--btn-gradient-start, var(--accent)) 0%, var(--btn-gradient-mid, var(--secondary)) 50%, var(--btn-gradient-end, var(--success)) 100%);
     background-size: var(--btn-glow-size) var(--btn-glow-size), 180% 180%;
     background-position: center, var(--btn-bg-x) var(--btn-bg-y);
