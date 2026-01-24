@@ -9,11 +9,11 @@ export default function AutoSavePlugin({lessonId}: {lessonId: number | string}):
   const SAVE_TO_SERVER_INTERVAL_MS = 15 * 60_000;
 
   useEffect(() => {
-    const saveEditor = setInterval(() => {
-      const savedEditorState =
-        JSON.stringify(serializedDocumentFromEditorState(editor.getEditorState()));
+    // Immediately save on lesson page load
+    saveEditorStateLocally(editor, lessonId);
 
-      sessionStorage.setItem(`lesson-draft-${lessonId}`, savedEditorState);
+    const saveEditor = setInterval(() => {
+      saveEditorStateLocally(editor, lessonId);  
     }, SAVE_LOCALLY_INTERVAL_MS)
 
     return () => clearInterval(saveEditor);
@@ -29,3 +29,10 @@ export default function AutoSavePlugin({lessonId}: {lessonId: number | string}):
 
   return null;
 }
+
+const saveEditorStateLocally = (editor: LexicalEditor, lessonId: number | string) => {
+      const savedEditorState =
+        JSON.stringify(serializedDocumentFromEditorState(editor.getEditorState()));
+
+      sessionStorage.setItem(`lesson-draft-${lessonId}`, savedEditorState);
+    }
