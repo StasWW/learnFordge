@@ -1,6 +1,8 @@
 import {type JSX, useEffect} from "react";
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import {serializedDocumentFromEditorState} from "@lexical/file";
+import type {LexicalEditor} from "lexical";
+
 
 export default function AutoSavePlugin({lessonId}: {lessonId: number | string}): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
