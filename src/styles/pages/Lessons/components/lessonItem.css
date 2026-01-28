@@ -1,10 +1,12 @@
 .lesson-item {
+    --menu-popover-bg: var(--glass-bg-strong);
+
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 1rem;
     width: 100%;
-    padding: 1.1rem 1.6rem;
+    padding: 1.1rem 1.6rem 1.1rem 2rem;
     background-color: var(--glass-bg-strong);
     border: 1px solid var(--glass-border-strong);
     border-radius: 14px;
@@ -14,6 +16,7 @@
 
     cursor: pointer;
     position: relative;
+    z-index: 0;
     isolation: isolate;
 
     &::before {
@@ -56,8 +59,9 @@
 
     .controls {
         display: flex;
-        flex-direction: row;
-        gap: 0.5rem;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.45rem;
         margin-left: auto;
         position: relative;
         z-index: 1;
@@ -121,6 +125,81 @@
         }
     }
 
+    .lesson-item-menu {
+        display: none;
+        margin-left: auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .menu-trigger {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--glass-border);
+        background-color: var(--glass-bg);
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        box-shadow: 0 10px 22px rgba(2, 8, 20, 0.18);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+
+        &:hover {
+            background-color: var(--glass-bg-hover);
+            border-color: color-mix(in srgb, var(--accent) 45%, var(--glass-border));
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    .menu-popover {
+        position: absolute;
+        top: calc(100% + 0.55rem);
+        right: 0;
+        min-width: 180px;
+        z-index: 3;
+        padding: 0.45rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        background: var(--menu-popover-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 14px;
+        box-shadow: 0 20px 40px rgba(5, 8, 18, 0.18);
+        backdrop-filter: none;
+    }
+
+    .menu-item {
+        width: 100%;
+        border: none;
+        background: transparent;
+        color: var(--text);
+        text-align: left;
+        padding: 0.7rem 0.9rem;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+    }
+
+    .menu-item.delete-lesson-button:hover {
+        background-color: color-mix(in srgb, var(--danger) 16%, transparent);
+    }
+
+    &.menu-open {
+        z-index: 6;
+    }
+
     &.skeleton-animation::before {
         content: none;
     }
@@ -166,7 +245,7 @@
     }
 
     @media (max-width: 640px) {
-        padding: 0.95rem 1.15rem;
+        padding: 1.1rem 1.25rem 1.1rem 1.7rem;
 
         span {
             font-size: 0.9375rem;
@@ -187,7 +266,41 @@
             width: 28px;
             height: 28px;
         }
+
+        .controls {
+            display: none;
+        }
+
+        .lesson-item-menu {
+            display: flex;
+        }
+
+        .menu-trigger {
+            width: 48px;
+            height: 48px;
+        }
+
+        .menu-item {
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+        }
     }
+
+    @media (max-width: 520px) {
+        gap: 0.75rem;
+
+        span {
+            min-width: 0;
+        }
+    }
+}
+
+[data-theme="light"] .lesson-item {
+    --menu-popover-bg: #ffffff;
+}
+
+[data-theme="dark"] .lesson-item {
+    --menu-popover-bg: #0a101c;
 }
 
 [data-theme="dark"] .lesson-item .controls button.edit-lesson-button:hover {

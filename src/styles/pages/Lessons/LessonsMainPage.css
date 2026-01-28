@@ -180,11 +180,35 @@
 @media ( max-width: 768px ) {
     .lessons-main-page {
         main {
-            gap: 1rem;
+            gap: 1.05rem;
         }
     }
 }
 
 .lessons-content {
     animation: height 1s ease;
+}
+
+@media (max-width: 640px) {
+    .lessons-main-page {
+        header {
+            padding: 1.85rem 1rem 1.25rem;
+        }
+
+        main {
+            padding: 1.55rem 1.05rem 1.75rem;
+            gap: 1.2rem;
+        }
+
+        .create-lesson-button {
+            width: 100%;
+            max-width: 420px;
+            margin-top: 1.25rem;
+        }
+    }
+
+    .lessons-content,
+    .lesson-skeleton-list {
+        gap: 1.1rem;
+    }
 }
