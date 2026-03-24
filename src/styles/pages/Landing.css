@@ -4,12 +4,35 @@
 @import "./landing/faq.css";
 
 .landing-page {
-    background: var(--landing-gradient);
+    --landing-page-gradient:
+        radial-gradient(120% 120% at 12% 10%, rgba(124, 58, 237, 0.16), transparent 42%),
+        radial-gradient(120% 120% at 88% 6%, rgba(192, 132, 252, 0.12), transparent 44%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    --landing-page-dots-color: rgba(26, 22, 37, 0.28);
+    --landing-page-dots-opacity: 0.6;
+    --landing-page-dots-dot-size: 1px;
+    --landing-page-dots-fade-size: 1.2px;
+    --landing-page-dots-gap: 34px;
+    --landing-page-section-kicker-bg: #e4e3fb;
     min-height: 100vh;
     color: var(--text);
     overflow-x: hidden;
     position: relative;
     z-index: 0;
+}
+
+[data-theme="dark"] .landing-page {
+    --landing-page-gradient:
+        radial-gradient(120% 120% at 12% 10%, rgba(124, 247, 210, 0.24), transparent 42%),
+        radial-gradient(120% 120% at 88% 6%, rgba(108, 186, 255, 0.24), transparent 44%),
+        linear-gradient(180deg, #0a1221 0%, #050912 100%);
+    --landing-page-dots-color: rgba(231, 242, 255, 0.2);
+    --landing-page-dots-opacity: 0;
+    --landing-page-section-kicker-bg: rgba(124, 247, 210, 0.12);
+}
+
+.landing-page {
+    background: var(--landing-page-gradient);
 }
 
 .landing-page::before {
@@ -23,12 +46,12 @@
     background-image:
         radial-gradient(
             circle,
-            var(--landing-dots-color, rgba(26, 22, 37, 0.28)) var(--landing-dots-dot-size, 1px),
-            transparent var(--landing-dots-fade-size, 1.2px)
+            var(--landing-page-dots-color) var(--landing-page-dots-dot-size),
+            transparent var(--landing-page-dots-fade-size)
         );
-    background-size: var(--landing-dots-gap, 34px) var(--landing-dots-gap, 34px);
+    background-size: var(--landing-page-dots-gap) var(--landing-page-dots-gap);
     background-repeat: repeat;
-    opacity: var(--landing-dots-opacity, 0.6);
+    opacity: var(--landing-page-dots-opacity);
     pointer-events: none;
     z-index: -1;
 }
@@ -39,7 +62,7 @@
     gap: 0.35rem;
     padding: 0.55rem 1.05rem;
     border-radius: 999px;
-    background: var(--section-kicker-bg);
+    background: var(--landing-page-section-kicker-bg);
     color: var(--accent);
     font-weight: 700;
     font-size: 1.1rem;

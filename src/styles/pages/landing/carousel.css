@@ -1,4 +1,26 @@
 .features-carousel {
+    --feature-card-bg-cloud: rgba(99, 102, 241, 0.18);
+    --feature-card-bg-analytics: rgba(139, 92, 246, 0.16);
+    --feature-card-bg-lessons: rgba(245, 158, 11, 0.18);
+    --feature-card-bg-meetings: rgba(34, 211, 238, 0.18);
+    --carousel-button-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    --carousel-button-shadow-hover: 0 6px 16px rgba(99, 102, 241, 0.26);
+    --carousel-button-border-hover: rgba(99, 102, 241, 0.4);
+    --carousel-button-outline: rgba(99, 102, 241, 0.5);
+}
+
+[data-theme="dark"] .features-carousel {
+    --feature-card-bg-cloud: rgba(124, 247, 210, 0.16);
+    --feature-card-bg-analytics: rgba(108, 186, 255, 0.16);
+    --feature-card-bg-lessons: rgba(199, 243, 109, 0.18);
+    --feature-card-bg-meetings: rgba(255, 201, 125, 0.18);
+    --carousel-button-shadow: 0 4px 12px rgba(2, 8, 20, 0.4);
+    --carousel-button-shadow-hover: 0 6px 16px rgba(2, 8, 20, 0.48);
+    --carousel-button-border-hover: rgba(124, 247, 210, 0.35);
+    --carousel-button-outline: rgba(124, 247, 210, 0.45);
+}
+
+.features-carousel {
     position: relative;
     padding: 1.6rem 0 4.4rem;
     margin-left: calc(50% - 50vw);
@@ -116,19 +138,19 @@
     background: var(--glass-bg-strong);
     color: var(--text);
     cursor: pointer;
-    box-shadow: var(--carousel-control-shadow);
+    box-shadow: var(--carousel-button-shadow);
     backdrop-filter: blur(var(--blur-amount));
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .features-carousel .carousel-btn:hover {
     transform: translateY(-1px);
-    border-color: var(--carousel-control-border-hover);
-    box-shadow: var(--carousel-control-shadow-hover);
+    border-color: var(--carousel-button-border-hover);
+    box-shadow: var(--carousel-button-shadow-hover);
 }
 
 .features-carousel .carousel-btn:focus-visible {
-    outline: 2px solid var(--carousel-control-outline);
+    outline: 2px solid var(--carousel-button-outline);
     outline-offset: 2px;
 }
 
