@@ -1,7 +1,6 @@
-import {useLocation, useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {useLocation, useParams, useSearchParams} from "react-router-dom";
 import TextEditor from "./Components/TextEditor.tsx";
-import IconButton from "../../assets/CommonComponents/IconButton.tsx";
-import ChevronIcon from "../../assets/images/commonIcons/ChevronIcon.tsx";
+import BackButton from "../../assets/CommonComponents/BackButton.tsx";
 import '../../styles/pages/Lessons/LessonIdPage.css';
 import type {viewLessonProps} from "../../types/lessonTypes.ts";
 import {Suspense, useMemo, type CSSProperties} from "react";
@@ -13,7 +12,6 @@ export default function LessonIdPage() {
   const { id: paramId } = useParams<{id: string}>();
   const locationState = useLocation()?.state as viewLessonProps | null;
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const isEditMode = searchParams.get('edit') === 'true';
 
   const id = locationState?.id ?? paramId;
@@ -24,19 +22,7 @@ export default function LessonIdPage() {
   return (
     <div className='lesson-id-page'>
       <div className="lesson-header">
-        <IconButton
-          type="button"
-          className="lesson-back-button"
-          aria-label="Назад"
-          icon={<ChevronIcon className="lesson-back-icon" direction="left" aria-hidden="true" />}
-          onClick={() => {
-            if (window.history.length > 1) {
-              navigate(-1);
-            } else {
-              navigate('/Lessons');
-            }
-          }}
-        />
+        <BackButton FallbackPath="/Lessons" />
         <h1
           className={`lesson-name ${isEditMode ? 'editable' : ''}`}
           contentEditable={isEditMode}

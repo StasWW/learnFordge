@@ -1,7 +1,7 @@
 import {forwardRef, type ButtonHTMLAttributes, type ReactNode} from "react";
 import Button from "./Button.tsx";
 
-type IconButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> & {
+export type IconButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> & {
   icon: ReactNode;
   children?: ReactNode;
   iconPosition?: "start" | "end";
