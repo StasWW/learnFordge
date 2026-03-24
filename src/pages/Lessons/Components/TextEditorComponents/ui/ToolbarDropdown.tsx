@@ -1,5 +1,6 @@
 import type {PluginItem} from "../../../../../types/lessonTypes.ts";
 import {useEffect, useEffectEvent, useRef, useState} from "react";
+import Button from "../../../../../assets/CommonComponents/Button.tsx";
 
 export default function Dropdown({
   buttons,
@@ -49,7 +50,7 @@ export default function Dropdown({
 
   return (
     <div className='toolbar-dropdown' ref={dropdownRef}>
-      <button
+      <Button
         onClick={() => setIsOpen(!isOpen)}
         aria-label={selected.label}
         aria-expanded={isOpen}
@@ -58,11 +59,11 @@ export default function Dropdown({
       >
         <img src={selected.icon} alt={selected.label} />
         <span>{selected.label}</span><span className="dropdown-arrow">▼</span>
-      </button>
+      </Button>
       {isOpen && (
         <div className="dropdown-content">
           {buttons.map((button) => (
-            <button
+            <Button
               key={button.event}
               onClick={() => handleSelect(button)}
               className={`dropdown-item ${selected.event === button.event ? 'selected' : ''}`}
@@ -71,7 +72,7 @@ export default function Dropdown({
             >
               <img src={button.icon} alt="" />
               <span>{button.label}</span>
-            </button>
+            </Button>
           ))}
         </div>
       )}

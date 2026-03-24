@@ -10,6 +10,9 @@ import { mergeRegister } from "@lexical/utils";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 
 import "../../../../../../styles/pages/Lessons/components/modals/floatingLinkEditor.css";
+import IconButton from "../../../../../../assets/CommonComponents/IconButton.tsx";
+import CheckIcon from "../../../../../../assets/images/commonIcons/CheckIcon.tsx";
+import EditIcon from "../../../../../../assets/images/commonIcons/EditIcon.tsx";
 import getSelectedNode from "../../utils/getSelectedNode.ts";
 
 const LowPriority = 1;
@@ -179,10 +182,19 @@ export default function FloatingLinkEditor({ editor }: FloatingLinkEditorProps) 
             {linkUrl || "Нет ссылки"}
           </a>
         )}
-        <button
+        <IconButton
           className="floating-link-edit-btn"
           type="button"
           tabIndex={0}
+          aria-label={isEditMode ? "Сохранить ссылку" : "Редактировать ссылку"}
+          title={isEditMode ? "Сохранить ссылку" : "Редактировать ссылку"}
+          icon={
+            isEditMode ? (
+              <CheckIcon size={16} aria-hidden="true" />
+            ) : (
+              <EditIcon size={16} aria-hidden="true" />
+            )
+          }
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => {
             if (isEditMode) {
@@ -191,9 +203,7 @@ export default function FloatingLinkEditor({ editor }: FloatingLinkEditorProps) 
               setEditMode(true);
             }
           }}
-        >
-          {isEditMode ? "✓" : "✎"}
-        </button>
+        />
       </div>
     </div>
   );

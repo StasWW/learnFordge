@@ -11,12 +11,14 @@ export default function AutoSavePlugin({lessonId}: {lessonId: number | string}):
   const SAVE_TO_SERVER_INTERVAL_MS = 15 * 60_000;
 
   useEffect(() => {
-    // Immediately save on lesson page load
-    saveEditorStateLocally(editor, lessonId);
+    if (!hasExistingDraft(lessonId)) {
+      // Immediately save on lesson page load, but don't overwrite an existing draft
+      saveEditorStateLocally(editor, lessonId);
+    }
 
     const saveEditor = setInterval(() => {
-      saveEditorStateLocally(editor, lessonId);  
-    }, SAVE_LOCALLY_INTERVAL_MS)
+      saveEditorStateLocally(editor, lessonId);
+    }, SAVE_LOCALLY_INTERVAL_MS);
 
     return () => clearInterval(saveEditor);
   }, [editor, lessonId]);
@@ -33,8 +35,16 @@ export default function AutoSavePlugin({lessonId}: {lessonId: number | string}):
 }
 
 const saveEditorStateLocally = (editor: LexicalEditor, lessonId: number | string) => {
-      const savedEditorState =
-        JSON.stringify(serializedDocumentFromEditorState(editor.getEditorState()));
+  const savedEditorState =
+    JSON.stringify(serializedDocumentFromEditorState(editor.getEditorState()));
 
-      sessionStorage.setItem(`lesson-draft-${lessonId}`, savedEditorState);
-    }
+  sessionStorage.setItem(`lesson-draft-${lessonId}`, savedEditorState);
+};
+
+const hasExistingDraft = (lessonId: number | string): boolean => {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  return window.sessionStorage.getItem(`lesson-draft-${lessonId}`) !== null;
+};

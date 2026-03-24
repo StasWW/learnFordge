@@ -1,7 +1,12 @@
 import type {lessonCompactObject} from "../../../types/lessonTypes.ts";
+import Button from "../../../assets/CommonComponents/Button.tsx";
+import IconButton from "../../../assets/CommonComponents/IconButton.tsx";
 import LessonItemIcon from "../../../assets/images/LessonItemIcon.tsx";
+import EditIcon from "../../../assets/images/commonIcons/EditIcon.tsx";
+import MoreVerticalIcon from "../../../assets/images/commonIcons/MoreVerticalIcon.tsx";
+import TrashIcon from "../../../assets/images/commonIcons/TrashIcon.tsx";
 import "../../../styles/pages/Lessons/components/lessonItem.css";
-import {useEffect, useRef, useState, type MouseEvent} from "react";
+import {useEffect, useRef, useState, type MouseEvent as ReactMouseEvent} from "react";
 
 export function LessonItem(
   { id,
@@ -21,7 +26,7 @@ export function LessonItem(
   useEffect(() => {
     if (!menuOpen) return;
 
-    const handleOutsideClick = (event: MouseEvent) => {
+    const handleOutsideClick = (event: globalThis.MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setMenuOpen(false);
       }
@@ -53,82 +58,43 @@ export function LessonItem(
       {isEditable && (
         <>
           <div className='controls'>
-            <button
+            <IconButton
               className="edit-lesson-button"
               aria-label={`Редактировать ${title}`}
-              onClick={(event: MouseEvent<HTMLButtonElement>) => {
+              icon={<EditIcon size={18} aria-hidden="true" />}
+              onClick={(event: ReactMouseEvent<HTMLButtonElement>) => {
                 event.stopPropagation();
                 handleEdit(id, title);
-              }}>
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                width="18"
-                height="18"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-              </svg>
-            </button>
-            <button className="delete-lesson-button" aria-label={`Удалить ${title}`} onClick={(event: MouseEvent<HTMLButtonElement>) => {
-              event.stopPropagation();
-            }}>
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                width="18"
-                height="18"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="3 6 5 6 21 6" />
-                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                <path d="M10 11v6" />
-                <path d="M14 11v6" />
-                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-              </svg>
-            </button>
+              }}
+            />
+            <IconButton
+              className="delete-lesson-button"
+              aria-label={`Удалить ${title}`}
+              icon={<TrashIcon size={18} aria-hidden="true" />}
+              onClick={(event: ReactMouseEvent<HTMLButtonElement>) => {
+                event.stopPropagation();
+              }}
+            />
           </div>
           <div
             className="lesson-item-menu"
             ref={menuRef}
             onClick={(event) => event.stopPropagation()}
           >
-            <button
+            <IconButton
               className="menu-trigger"
               aria-label={`Открыть меню для ${title}`}
               aria-haspopup="menu"
               aria-expanded={menuOpen}
+              icon={<MoreVerticalIcon size={18} aria-hidden="true" />}
               onClick={(event) => {
                 event.stopPropagation();
                 setMenuOpen((prev) => !prev);
               }}
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                width="18"
-                height="18"
-                fill="currentColor"
-              >
-                <circle cx="12" cy="5" r="2" />
-                <circle cx="12" cy="12" r="2" />
-                <circle cx="12" cy="19" r="2" />
-              </svg>
-            </button>
+            />
             {menuOpen && (
               <div className="menu-popover" role="menu">
-                <button
+                <Button
                   className="menu-item edit-lesson-button"
                   role="menuitem"
                   onClick={(event) => {
@@ -138,8 +104,8 @@ export function LessonItem(
                   }}
                 >
                   Редактировать
-                </button>
-                <button
+                </Button>
+                <Button
                   className="menu-item delete-lesson-button"
                   role="menuitem"
                   onClick={(event) => {
@@ -148,7 +114,7 @@ export function LessonItem(
                   }}
                 >
                   Удалить
-                </button>
+                </Button>
               </div>
             )}
           </div>

@@ -1,5 +1,7 @@
 import {useLocation, useNavigate, useParams, useSearchParams} from "react-router-dom";
 import TextEditor from "./Components/TextEditor.tsx";
+import IconButton from "../../assets/CommonComponents/IconButton.tsx";
+import ChevronIcon from "../../assets/images/commonIcons/ChevronIcon.tsx";
 import '../../styles/pages/Lessons/LessonIdPage.css';
 import type {viewLessonProps} from "../../types/lessonTypes.ts";
 import {Suspense, useMemo, type CSSProperties} from "react";
@@ -17,15 +19,16 @@ export default function LessonIdPage() {
   const id = locationState?.id ?? paramId;
   const title = locationState?.title ?? 'Loading...';
 
-  const editorStatePromise = useMemo(() => Promise.resolve(undefined), [id]);
+  const editorStatePromise = useMemo(() => Promise.resolve(undefined), []);
 
   return (
     <div className='lesson-id-page'>
       <div className="lesson-header">
-        <button
+        <IconButton
           type="button"
           className="lesson-back-button"
           aria-label="Назад"
+          icon={<ChevronIcon className="lesson-back-icon" direction="left" aria-hidden="true" />}
           onClick={() => {
             if (window.history.length > 1) {
               navigate(-1);
@@ -33,18 +36,7 @@ export default function LessonIdPage() {
               navigate('/Lessons');
             }
           }}
-        >
-          <svg className="lesson-back-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="M15 5L8 12l7 7"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+        />
         <h1
           className={`lesson-name ${isEditMode ? 'editable' : ''}`}
           contentEditable={isEditMode}

@@ -19,6 +19,7 @@
     "katex": "^0.16.27",
     "lexical": "^0.39.0",
     "react": "^19.2.0",
+    "react-aria-components": "^1.16.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.11.0",
     "react-spinners": "^0.17.0",

@@ -1,5 +1,7 @@
 import {type ReactNode, useCallback} from "react";
 import { useState, useEffect } from "react";
+import IconButton from "./IconButton.tsx";
+import CloseIcon from "../images/commonIcons/CloseIcon.tsx";
 import '../../styles/common/Modal.css'
 
 /**
@@ -44,13 +46,12 @@ export function Modal({ children, onClose, className }: { children: ReactNode; c
         className={`modal ${className ?? ''}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <button
+        <IconButton
           className="closeBtn"
           onClick={handleClose}
           aria-label="закрыть"
-        >
-          ×
-        </button>
+          icon={<CloseIcon size="1em" aria-hidden="true" />}
+        />
         {children}
       </div>
     </div>

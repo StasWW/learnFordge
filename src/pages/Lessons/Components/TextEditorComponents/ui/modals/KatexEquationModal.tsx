@@ -16,6 +16,7 @@ import {useCallback, useState} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
 
 import KatexRenderer from '../KatexRenderer.tsx';
+import Button from "../../../../../../assets/CommonComponents/Button.tsx";
 import {Modal} from "../../../../../../assets/CommonComponents/Modal.tsx";
 
 type Props = {
@@ -83,7 +84,7 @@ export default function KatexEquationModal({
         </ErrorBoundary>
       </div>
       <div className="KatexEquationAlterer_dialogActions">
-        <button onClick={onClick}>Вставить</button>
+        <Button onClick={onClick}>Вставить</Button>
       </div>
     </Modal>
   );

@@ -1,8 +1,9 @@
 import type {viewLessonProps, lessonCompactObject} from "../../types/lessonTypes.ts";
+import Button from "../../assets/CommonComponents/Button.tsx";
 import {LessonItem} from "./Components/LessonItem.tsx";
 import "../../styles/pages/Lessons/LessonsMainPage.css";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect, useState, type CSSProperties} from "react";
 
 export default function LessonsMainPage() {
   const navigate = useNavigate();
@@ -71,9 +72,9 @@ export default function LessonsMainPage() {
             )}
           </div>
         </div>
-        <button className="create-lesson-button" aria-label="Создать новый урок">
+        <Button className="create-lesson-button" aria-label="Создать новый урок">
           Создать урок
-        </button>
+        </Button>
       </main>
     </div>
   );

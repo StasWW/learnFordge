@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, type ButtonHTMLAttributes, type PointerEvent as ReactPointerEvent } from 'react';
+import Button from "../../../assets/CommonComponents/Button.tsx";
 
 const clampPercent = (value: number) => Math.max(0, Math.min(100, value));
 
@@ -61,7 +62,7 @@ export default function GlowButton({
   );
 
   return (
-    <button
+    <Button
       ref={buttonRef}
       className={['glow-button', className].filter(Boolean).join(' ')}
       onPointerEnter={handlePointerEnter}

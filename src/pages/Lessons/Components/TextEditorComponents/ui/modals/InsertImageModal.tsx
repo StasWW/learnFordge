@@ -1,4 +1,5 @@
 import {Modal} from "../../../../../../assets/CommonComponents/Modal.tsx";
+import Button from "../../../../../../assets/CommonComponents/Button.tsx";
 import React, {useState} from "react";
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import {$getSelection, $insertNodes, $isRangeSelection} from "lexical";
@@ -85,9 +86,11 @@ export default function InsertImageModal({onClose}: {onClose: () => void}) {
               if (e.key === 'Enter') handleInsert(imageUrl.trim());
             }}
           />
-          <button
+          <Button
             onClick={() => handleInsert(imageUrl.trim())}
-          >Вставить</button>
+          >
+            Вставить
+          </Button>
         </div>
 
         { imageUrlError && <p className='error-txt'>{imageUrlError}</p> }

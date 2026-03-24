@@ -33,24 +33,10 @@ export async function getEditorStateAsJson(
       'Content-Type': 'application/json',
     },
   });
-  if (import.meta.env.DEV) {
-    console.info('[Lessons:getEditorStateAsJson] response', {
-      url,
-      status: res.status,
-      ok: res.ok,
-    });
-  }
   if (!res.ok) {
     throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
   }
   const data = await res.json();
-  if (import.meta.env.DEV) {
-    console.info('[Lessons:getEditorStateAsJson] payload', {
-      id,
-      hasContent: Boolean(data?.content),
-      contentLength: typeof data?.content === 'string' ? data.content.length : null,
-    });
-  }
   return data as lessonObject;
 }
 

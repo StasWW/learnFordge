@@ -1,4 +1,5 @@
 import {Modal} from "../../../../../../assets/CommonComponents/Modal.tsx";
+import Button from "../../../../../../assets/CommonComponents/Button.tsx";
 import {useState} from "react";
 import '../../../../../../styles/pages/Lessons/components/modals/insertVideoModal.css';
 import {$getSelection, $insertNodes, $isRangeSelection, type LexicalEditor} from "lexical";
@@ -75,13 +76,14 @@ export default function InsertVideoModal({onClose, editor}: {onClose: () => void
             if (e.key === 'Enter') handleInsert(videoUrl.trim());
           }}
         />
-        <button
+        <Button
           onClick={() => handleInsert(videoUrl.trim())}
-        >Вставить</button>
+        >
+          Вставить
+        </Button>
       </div>
 
       {errorText && <p className={'error-txt'}>{errorText}</p>}
     </Modal>
   );
 }
-
