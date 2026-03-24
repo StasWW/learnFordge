@@ -4,6 +4,7 @@ import type {LexicalEditor} from "lexical";
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {BeatLoader} from "react-spinners";
 import { useState } from 'react';
+import Button from "../../../../../assets/CommonComponents/Button.tsx";
 
 export default function ControlsPlugin({lessonId} : {lessonId: string | number}) {
   const [editor] = useLexicalComposerContext();
@@ -43,11 +44,11 @@ function SaveButton({lessonId, editor}: {lessonId: string | number, editor: Lexi
   };
 
   return (
-    <button
+    <Button
       onClick={() => handleSave(lessonId)}
       disabled={isLoading}
     >
       {isLoading ? <BeatLoader size={8} color="#ffffff" /> : 'Сохранить'}
-    </button>
+    </Button>
   );
 }

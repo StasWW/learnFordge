@@ -1,4 +1,38 @@
 .faq-section {
+    --faq-panel-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(250, 248, 255, 0.88));
+    --faq-panel-shadow: 0 20px 60px rgba(99, 102, 241, 0.14);
+    --faq-item-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(250, 248, 255, 0.9));
+    --faq-item-shadow: 0 8px 20px rgba(99, 102, 241, 0.12);
+    --faq-item-shadow-hover: 0 12px 28px rgba(99, 102, 241, 0.2);
+    --faq-divider: rgba(99, 102, 241, 0.1);
+    --faq-chevron-bg: rgba(99, 102, 241, 0.06);
+    --faq-chevron-bg-open: rgba(99, 102, 241, 0.16);
+    --faq-open-border: rgba(99, 102, 241, 0.45);
+    --faq-accent-gradient: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(139, 92, 246, 0.14), rgba(167, 139, 250, 0.12));
+    --faq-bar-gradient: linear-gradient(180deg, rgba(99, 102, 241, 0.95), rgba(139, 92, 246, 0.8));
+    --faq-bar-gradient-open: linear-gradient(180deg, rgba(99, 102, 241, 1), rgba(139, 92, 246, 0.95));
+    --faq-bar-shadow: 0 3px 14px rgba(99, 102, 241, 0.25);
+    --faq-bar-shadow-open: 0 4px 18px rgba(99, 102, 241, 0.3);
+}
+
+[data-theme="dark"] .faq-section {
+    --faq-panel-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    --faq-panel-shadow: 0 24px 80px rgba(2, 8, 20, 0.65);
+    --faq-item-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    --faq-item-shadow: 0 8px 26px rgba(2, 8, 20, 0.62);
+    --faq-item-shadow-hover: 0 12px 30px rgba(3, 10, 24, 0.7);
+    --faq-divider: rgba(255, 255, 255, 0.08);
+    --faq-chevron-bg: rgba(255, 255, 255, 0.05);
+    --faq-chevron-bg-open: rgba(124, 247, 210, 0.14);
+    --faq-open-border: rgba(124, 247, 210, 0.5);
+    --faq-accent-gradient: linear-gradient(135deg, rgba(124, 247, 210, 0.12), rgba(108, 186, 255, 0.12), rgba(199, 243, 109, 0.08));
+    --faq-bar-gradient: linear-gradient(180deg, rgba(124, 247, 210, 0.9), rgba(108, 186, 255, 0.75));
+    --faq-bar-gradient-open: linear-gradient(180deg, rgba(124, 247, 210, 1), rgba(108, 186, 255, 0.95));
+    --faq-bar-shadow: 0 3px 14px rgba(2, 8, 20, 0.35);
+    --faq-bar-shadow-open: 0 4px 18px rgba(124, 247, 210, 0.32);
+}
+
+.faq-section {
     position: relative;
     padding: clamp(5rem, 8vw, 7rem) 1.5rem 5rem;
     margin-top: 0;
@@ -14,9 +48,9 @@
     z-index: 1;
     padding: clamp(1.35rem, 3vw, 2rem);
     border-radius: 24px;
-    background: var(--landing-faq-panel-bg);
+    background: var(--faq-panel-bg);
     border: 1px solid var(--glass-border-strong);
-    box-shadow: var(--landing-faq-panel-shadow);
+    box-shadow: var(--faq-panel-shadow);
     backdrop-filter: blur(var(--blur-amount));
 }
 
@@ -47,11 +81,11 @@
 }
 
 .faq-item {
-    background: var(--landing-faq-item-bg);
+    background: var(--faq-item-bg);
     border: 1px solid var(--glass-border-strong);
     border-radius: 16px;
     backdrop-filter: blur(var(--blur-amount));
-    box-shadow: var(--landing-faq-item-shadow);
+    box-shadow: var(--faq-item-shadow);
     overflow: hidden;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     position: relative;
@@ -63,7 +97,7 @@
     position: absolute;
     inset: -1px;
     border-radius: 18px;
-    background: var(--landing-faq-accent-gradient);
+    background: var(--faq-accent-gradient);
     opacity: 0;
     transition: opacity 0.25s ease;
     pointer-events: none;
@@ -76,11 +110,11 @@
 
 .faq-item:hover {
     transform: translateY(-3px);
-    box-shadow: var(--landing-faq-item-shadow-hover);
+    box-shadow: var(--faq-item-shadow-hover);
 }
 
 .faq-item--open {
-    border-color: var(--landing-faq-open-border);
+    border-color: var(--faq-open-border);
 }
 
 .faq-item--open::before,
@@ -135,27 +169,27 @@
     bottom: 0.55rem;
     width: 3px;
     border-radius: 999px;
-    background: var(--landing-faq-bar-gradient);
-    box-shadow: var(--landing-faq-bar-shadow);
+    background: var(--faq-bar-gradient);
+    box-shadow: var(--faq-bar-shadow);
 }
 
 .faq-item--open .faq-question-text::before {
-    background: var(--landing-faq-bar-gradient-open);
-    box-shadow: var(--landing-faq-bar-shadow-open);
+    background: var(--faq-bar-gradient-open);
+    box-shadow: var(--faq-bar-shadow-open);
 }
 
 .faq-chevron {
     flex-shrink: 0;
     color: var(--muted-text);
     transition: transform 0.3s ease, background 0.2s ease;
-    background: var(--landing-faq-chevron-bg);
+    background: var(--faq-chevron-bg);
     border-radius: 50%;
     padding: 0.3rem;
 }
 
 .faq-item--open .faq-chevron {
     transform: rotate(180deg);
-    background: var(--landing-faq-chevron-bg-open);
+    background: var(--faq-chevron-bg-open);
 }
 
 .faq-answer {
@@ -169,7 +203,7 @@
 .faq-item--open .faq-answer {
     grid-template-rows: 1fr;
     padding: 0.5rem 1.35rem 1.25rem;
-    border-top: 1px solid var(--landing-faq-divider);
+    border-top: 1px solid var(--faq-divider);
 }
 
 .faq-answer p {

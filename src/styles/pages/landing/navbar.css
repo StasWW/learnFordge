@@ -1,4 +1,29 @@
 .top-nav {
+    --nav-shell-bg:
+        radial-gradient(140% 180% at 10% 0%, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 60%),
+        radial-gradient(120% 160% at 90% 20%, rgba(99, 102, 241, 0.12), rgba(255, 255, 255, 0) 58%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.42), rgba(245, 247, 255, 0.25));
+    --nav-shell-sheen: linear-gradient(120deg, rgba(99, 102, 241, 0.22), rgba(139, 92, 246, 0.18), rgba(255, 255, 255, 0.12));
+    --nav-shell-sheen-opacity: 0.7;
+    --nav-shell-shadow: 0 14px 34px rgba(99, 102, 241, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.75), inset 0 -1px 0 rgba(99, 102, 241, 0.1);
+    --nav-shell-blend-mode: screen;
+    --nav-login-button-shadow: 0 12px 26px rgba(44, 38, 96, 0.2), 0 10px 22px rgba(90, 86, 196, 0.28), 0 0 34px rgba(136, 130, 246, 0.5);
+    --nav-login-button-shadow-hover: 0 16px 34px rgba(44, 38, 96, 0.24), 0 14px 28px rgba(90, 86, 196, 0.38), 0 0 46px rgba(136, 130, 246, 0.65);
+    --nav-login-button-outline: rgba(104, 104, 220, 0.5);
+}
+
+[data-theme="dark"] .top-nav {
+    --nav-shell-bg: linear-gradient(135deg, rgba(10, 16, 28, 0.55), rgba(10, 16, 28, 0.35));
+    --nav-shell-sheen: linear-gradient(120deg, rgba(124, 247, 210, 0.08), rgba(108, 186, 255, 0.08));
+    --nav-shell-sheen-opacity: 0.85;
+    --nav-shell-shadow: 0 12px 38px rgba(0, 0, 0, 0.28);
+    --nav-shell-blend-mode: screen;
+    --nav-login-button-shadow: 0 10px 28px rgba(4, 12, 24, 0.3), 0 5px 16px rgba(108, 186, 255, 0.22);
+    --nav-login-button-shadow-hover: 0 12px 32px rgba(108, 186, 255, 0.45), 0 8px 20px rgba(124, 247, 210, 0.2);
+    --nav-login-button-outline: rgba(124, 247, 210, 0.45);
+}
+
+.top-nav {
     position: fixed;
     top: 0;
     left: 0;
@@ -18,12 +43,12 @@
     align-items: center;
     gap: 1.25rem;
     position: relative;
-    background: var(--landing-nav-bg);
+    background: var(--nav-shell-bg);
     backdrop-filter: blur(20px) saturate(140%);
     -webkit-backdrop-filter: blur(20px) saturate(140%);
     border: 1px solid var(--glass-border-strong);
     border-radius: 18px;
-    box-shadow: var(--landing-nav-shadow);
+    box-shadow: var(--nav-shell-shadow);
 }
 
 .nav-shell::before {
@@ -31,10 +56,10 @@
     position: absolute;
     inset: 0;
     border-radius: 18px;
-    background: var(--landing-nav-sheen);
-    opacity: var(--landing-nav-sheen-opacity);
+    background: var(--nav-shell-sheen);
+    opacity: var(--nav-shell-sheen-opacity);
     pointer-events: none;
-    mix-blend-mode: var(--landing-nav-blend-mode);
+    mix-blend-mode: var(--nav-shell-blend-mode);
 }
 
 .nav-brand {
@@ -83,9 +108,9 @@
     --glow-button-padding: 0.9rem 1.6rem;
     --glow-button-font-size: 1.02rem;
     --glow-button-radius: 12px;
-    --glow-button-shadow: var(--nav-login-shadow);
-    --glow-button-shadow-hover: var(--nav-login-shadow-hover);
-    --glow-button-outline: var(--nav-login-outline);
+    --glow-button-shadow: var(--nav-login-button-shadow);
+    --glow-button-shadow-hover: var(--nav-login-button-shadow-hover);
+    --glow-button-outline: var(--nav-login-button-outline);
     backdrop-filter: blur(var(--blur-amount));
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-size 0.35s ease;
 }

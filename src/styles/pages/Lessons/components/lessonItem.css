@@ -1,57 +1,122 @@
 .lesson-item {
+    --menu-popover-bg: var(--glass-bg-strong);
+
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 1rem;
     width: 100%;
-    padding: 1rem 1.5rem;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    padding: 1.1rem 1.6rem 1.1rem 2rem;
+    background-color: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: 14px;
+    box-shadow: var(--feature-card-shadow);
+    backdrop-filter: blur(var(--blur-amount));
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 
     cursor: pointer;
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0.75rem;
+        top: 0.85rem;
+        bottom: 0.85rem;
+        width: 4px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, var(--accent), var(--secondary));
+        opacity: 0.85;
+        pointer-events: none;
+        z-index: 0;
+    }
 
     &:hover {
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        transform: scale(1.005);
+        box-shadow: var(--feature-card-shadow-hover);
+        transform: translateY(-1px);
+        border-color: color-mix(in srgb, var(--accent) 55%, var(--glass-border-strong));
+        background-color: var(--glass-bg-hover);
     }
 
     span {
         flex: 1;
         font-size: 1rem;
-        font-weight: 500;
+        font-weight: 600;
         color: var(--text);
+        letter-spacing: 0.01em;
+        position: relative;
+        z-index: 1;
+    }
+
+    svg {
+        flex-shrink: 0;
+        filter: drop-shadow(0 8px 18px rgba(2, 8, 20, 0.28));
+        position: relative;
+        z-index: 1;
     }
 
     .controls {
         display: flex;
-        flex-direction: row;
-        gap: 0.5rem;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.45rem;
         margin-left: auto;
+        position: relative;
+        z-index: 1;
 
         button {
             width: 36px;
             height: 36px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            border-radius: 6px;
+            border: 1px solid var(--glass-border);
+            background-color: var(--glass-bg);
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.125rem;
-            transition: all 0.2s ease;
+            color: var(--text);
+            box-shadow: 0 8px 18px rgba(2, 8, 20, 0.16);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+
+            svg {
+                width: 18px;
+                height: 18px;
+                filter: none;
+            }
 
             &:hover {
-                background: var(--accent);
+                background-color: var(--accent);
                 border-color: var(--accent);
                 transform: translateY(-1px);
+                box-shadow: 0 12px 24px rgba(2, 8, 20, 0.22);
+            }
+
+            &.edit-lesson-button:hover {
+                background:
+                    radial-gradient(120% 120% at 20% 20%, var(--btn-glow-strong, rgba(255, 255, 255, 0.55)) 0%, var(--btn-glow-soft, rgba(255, 255, 255, 0.25)) 32%, rgba(255, 255, 255, 0) 60%),
+                    linear-gradient(120deg, var(--btn-gradient-start, var(--accent)) 0%, var(--btn-gradient-mid, var(--secondary)) 50%, var(--btn-gradient-end, var(--success)) 100%);
+                background-size: 140% 140%, 180% 180%;
+                background-position: center, 50% 50%;
+                background-repeat: no-repeat;
+                border-color: transparent;
             }
 
             &.delete-lesson-button:hover {
-                background: var(--danger);
-                border-color: var(--danger);
+                background:
+                    radial-gradient(120% 120% at 20% 20%, color-mix(in srgb, var(--danger) 75%, #ffffff) 0%, rgba(255, 255, 255, 0) 55%),
+                    linear-gradient(
+                        120deg,
+                        color-mix(in srgb, var(--danger) 88%, #ff7a7a) 0%,
+                        var(--danger) 55%,
+                        color-mix(in srgb, var(--danger) 82%, #4c0b0b) 100%
+                    );
+                background-size: 140% 140%, 180% 180%;
+                background-position: center, 50% 50%;
+                background-repeat: no-repeat;
+                border-color: transparent;
             }
 
             &:active {
@@ -60,8 +125,127 @@
         }
     }
 
+    .lesson-item-menu {
+        display: none;
+        margin-left: auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .menu-trigger {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--glass-border);
+        background-color: var(--glass-bg);
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        box-shadow: 0 10px 22px rgba(2, 8, 20, 0.18);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+
+        &:hover {
+            background-color: var(--glass-bg-hover);
+            border-color: color-mix(in srgb, var(--accent) 45%, var(--glass-border));
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    .menu-popover {
+        position: absolute;
+        top: calc(100% + 0.55rem);
+        right: 0;
+        min-width: 180px;
+        z-index: 3;
+        padding: 0.45rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        background: var(--menu-popover-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 14px;
+        box-shadow: 0 20px 40px rgba(5, 8, 18, 0.18);
+        backdrop-filter: none;
+    }
+
+    .menu-item {
+        width: 100%;
+        border: none;
+        background: transparent;
+        color: var(--text);
+        text-align: left;
+        padding: 0.7rem 0.9rem;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+    }
+
+    .menu-item.delete-lesson-button:hover {
+        background-color: color-mix(in srgb, var(--danger) 16%, transparent);
+    }
+
+    &.menu-open {
+        z-index: 6;
+    }
+
+    &.skeleton-animation::before {
+        content: none;
+    }
+
+    &.skeleton-animation {
+        background-color: rgba(128, 128, 128, 0.2);
+        border-color: var(--border);
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+
+    &.lesson-item-skeleton {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    &.lesson-item-skeleton::before {
+        opacity: 0.35;
+    }
+
+    .lesson-item-skeleton__icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+    }
+
+    .lesson-item-skeleton__title {
+        height: 0.95rem;
+        border-radius: 999px;
+        flex: 1;
+    }
+
+    .lesson-item-skeleton__controls {
+        display: flex;
+        gap: 0.5rem;
+        margin-left: auto;
+    }
+
+    .lesson-item-skeleton__button {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+
     @media (max-width: 640px) {
-        padding: 0.875rem 1rem;
+        padding: 1.1rem 1.25rem 1.1rem 1.7rem;
 
         span {
             font-size: 0.9375rem;
@@ -72,5 +256,54 @@
             height: 32px;
             font-size: 1rem;
         }
+
+        .lesson-item-skeleton__icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .lesson-item-skeleton__button {
+            width: 28px;
+            height: 28px;
+        }
+
+        .controls {
+            display: none;
+        }
+
+        .lesson-item-menu {
+            display: flex;
+        }
+
+        .menu-trigger {
+            width: 48px;
+            height: 48px;
+        }
+
+        .menu-item {
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+        }
     }
+
+    @media (max-width: 520px) {
+        gap: 0.75rem;
+
+        span {
+            min-width: 0;
+        }
+    }
+}
+
+[data-theme="light"] .lesson-item {
+    --menu-popover-bg: #ffffff;
+}
+
+[data-theme="dark"] .lesson-item {
+    --menu-popover-bg: #0a101c;
+}
+
+[data-theme="dark"] .lesson-item .controls button.edit-lesson-button:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
 }

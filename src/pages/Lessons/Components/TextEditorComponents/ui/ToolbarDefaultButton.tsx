@@ -1,4 +1,5 @@
 import type {PluginItem} from "../../../../../types/lessonTypes.ts";
+import Button from "../../../../../assets/CommonComponents/Button.tsx";
 
 export default function DefaultButton({
   button,
@@ -12,7 +13,7 @@ export default function DefaultButton({
   disabled?: boolean
 }) {
   return (
-    <button
+    <Button
       onClick={() => action(button.event)}
       aria-label={button.label}
       title={button.label}
@@ -20,6 +21,6 @@ export default function DefaultButton({
       disabled={disabled}
     >
       <img src={button.icon} alt={button.label} />
-    </button>
+    </Button>
   )
 }

@@ -1,9 +1,17 @@
 .site-footer {
-    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    --site-footer-separator: rgba(139, 92, 246, 0.15);
+}
+
+[data-theme="dark"] .site-footer {
+    --site-footer-separator: rgba(255, 255, 255, 0.12);
+}
+
+.site-footer {
+    margin-top: auto;
     padding: 1rem clamp(1rem, 4vw, 2.8rem);
     background: transparent;
     color: var(--text);
-    border-top: 1px solid var(--footer-separator);
+    border-top: 1px solid var(--site-footer-separator);
 }
 
 .site-footer .footer-shell {

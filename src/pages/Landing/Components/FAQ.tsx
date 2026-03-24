@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react';
+import Button from "../../../assets/CommonComponents/Button.tsx";
+import ChevronIcon from "../../../assets/images/commonIcons/ChevronIcon.tsx";
 
 interface FAQItem {
   id: string;
@@ -72,7 +74,7 @@ export default function FAQ() {
                 className={`faq-item ${isOpen ? 'faq-item--open' : ''}`}
                 role="listitem"
               >
-                <button
+                <Button
                   className="faq-question"
                   type="button"
                   onClick={() => toggleItem(item.id)}
@@ -83,21 +85,13 @@ export default function FAQ() {
                   <div className="faq-question-text">
                     <span>{item.question}</span>
                   </div>
-                  <svg
+                  <ChevronIcon
                     className="faq-chevron"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    size={20}
+                    direction="down"
                     aria-hidden="true"
-                  >
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                </button>
+                  />
+                </Button>
                 <div
                   id={answerId}
                   className="faq-answer"

@@ -1,71 +1,58 @@
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
+import {editorStateFromSerializedDocument, type SerializedDocument} from "@lexical/file";
 import {type JSX, use, useEffect} from "react";
+import type {SerializedEditorState} from "lexical";
 import type {lessonObject} from "../../../../../types/lessonTypes.ts";
-import type {SerializedDocument} from "@lexical/file";
-import type {LexicalEditor} from "lexical";
 
-// Plugin to load previous editor state from a promise or session storage
-export default function LoadPreviousStatePlugin(
-  {
-    lessonId,
-    editorStatePromise,
-  }: {
-    lessonId: string | number,
-    editorStatePromise?: Promise<lessonObject | undefined | null>
-  }): JSX.Element | null{
+export default function LoadPreviousStatePlugin({
+  lessonId,
+  editorStatePromise,
+  isEditMode,
+}: {
+  lessonId: string | number;
+  editorStatePromise?: Promise<lessonObject | undefined | null>;
+  isEditMode: boolean;
+}): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
-
-  setEditorStateFromLocalStorage(lessonId, editor);
-
-  const editorData = editorStatePromise
-      ? use(editorStatePromise)
-      : undefined;
+  const editorData = editorStatePromise ? use(editorStatePromise) : undefined;
 
   useEffect(() => {
-    // Fetch data from the provided promise
-    if (!editorData?.content) return;
-    try {
-      const parsedState = editor.parseEditorState(editorData.content);
+    const autoSavedData = getAutoSavedData(lessonId);
 
-      editor.update(() => {
-        editor.setEditorState(parsedState);
-      });
-    } catch (error) {
-      console.error('Error loading editor state:', error);
+    if (autoSavedData && isEditMode) {
+      try {
+        const data = JSON.parse(autoSavedData) as SerializedDocument;
+        const maxAutoSavedTime = 1000 * 60 * 60;
+
+        if (typeof data.lastSaved === "number" && Date.now() - data.lastSaved < maxAutoSavedTime) {
+          const parsedState = editorStateFromSerializedDocument(editor, data);
+          editor.update(() => editor.setEditorState(parsedState));
+          return;
+        }
+      } catch (error) {
+        console.error("Error loading auto-saved editor state:", error);
+      }
     }
-  }, [editorData, editor, lessonId]);
+
+    if (!editorData?.content) return;
+
+    try {
+      const serverContent = editorData.content as unknown;
+      const parsedState = isSerializedDocument(serverContent)
+        ? editorStateFromSerializedDocument(editor, serverContent)
+        : editor.parseEditorState(serverContent as SerializedEditorState | string);
+
+      editor.update(() => editor.setEditorState(parsedState));
+    } catch (error) {
+      console.error("Error loading editor state:", error);
+    }
+  }, [editor, editorData, isEditMode, lessonId]);
 
   return null;
 }
 
-// Utils
+const getAutoSavedData = (lessonId: number | string): string | null =>
+  sessionStorage.getItem(`lesson-draft-${lessonId}`);
 
-const getAutoSavedData =
-    (lessonId: number | string): string | null => {
-  return sessionStorage.getItem(`lesson-draft-${lessonId}`);
-}
-
-const setEditorStateFromLocalStorage = (
-    lessonId: number | string,
-    editor: LexicalEditor,
-): void => {
-  const autoSavedData = getAutoSavedData(lessonId);
-  if (!autoSavedData) return;
-
-  const MAX_AUTO_SAVED_TIME = 1000 * 60 * 60;
-  const currentTime = new Date().getTime();
-  const data = JSON.parse(autoSavedData) as SerializedDocument;
-
-  if (data.lastSaved - currentTime < MAX_AUTO_SAVED_TIME) {
-    try {
-      const parsedState = editor.parseEditorState(data.editorState);
-
-      editor.update(() => {
-        editor.setEditorState(parsedState);
-      });
-      return;
-    } catch (error) {
-      console.error('Error loading auto-saved editor state:', error);
-    }
-  }
-}
+const isSerializedDocument = (value: unknown): value is SerializedDocument =>
+  Boolean(value && typeof value === "object" && "editorState" in value && "lastSaved" in value);

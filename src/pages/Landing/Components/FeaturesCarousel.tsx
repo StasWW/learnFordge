@@ -8,7 +8,9 @@ import {
     type CSSProperties,
     type PointerEvent as ReactPointerEvent,
 } from "react";
+import IconButton from "../../../assets/CommonComponents/IconButton.tsx";
 import { CloudIcon } from "../../../assets/images/featureIcons/CloudIcon.tsx";
+import ChevronIcon from "../../../assets/images/commonIcons/ChevronIcon.tsx";
 import type { FeatureItem } from "../../../types/landingTypes.ts";
 import { AnalyticsIcon } from "../../../assets/images/featureIcons/AnalyticsIcon.tsx";
 import { LessonsIcon } from "../../../assets/images/featureIcons/LessonsIcon.tsx";
@@ -422,28 +424,22 @@ function Feature({ name, description, icon: IconComp, iconSize, backgroundColor 
 function CarouselControls({ onPrev, onNext, trackId }: { onPrev: () => void; onNext: () => void; trackId: string }) {
     return (
         <div className="carousel-controls">
-            <button
+            <IconButton
                 className="carousel-btn"
                 type="button"
                 aria-label="Перелистнуть назад"
                 aria-controls={trackId}
+                icon={<ChevronIcon size={20} direction="left" aria-hidden="true" />}
                 onClick={onPrev}
-            >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <polyline points="15 18 9 12 15 6" />
-                </svg>
-            </button>
-            <button
+            />
+            <IconButton
                 className="carousel-btn"
                 type="button"
                 aria-label="Перелистнуть вперёд"
                 aria-controls={trackId}
+                icon={<ChevronIcon size={20} direction="right" aria-hidden="true" />}
                 onClick={onNext}
-            >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <polyline points="9 18 15 12 9 6" />
-                </svg>
-            </button>
+            />
         </div>
     );
 }

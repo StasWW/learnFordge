@@ -26,7 +26,8 @@ export async function sendEditorStateAsJson(
 export async function getEditorStateAsJson(
   id: string | number,
 ): Promise<lessonObject> {
-  const res = await fetch(`${import.meta.env.VITE_SERVER_LINK}/lessons/${id}`, {
+  const url = `${import.meta.env.VITE_SERVER_LINK}/lessons/${id}`;
+  const res = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

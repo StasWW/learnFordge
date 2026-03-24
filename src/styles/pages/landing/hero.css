@@ -1,4 +1,14 @@
 .hero {
+    --hero-glow-left-bg: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.35), transparent 48%);
+    --hero-glow-right-bg: radial-gradient(circle at 70% 10%, rgba(139, 92, 246, 0.28), transparent 52%);
+}
+
+[data-theme="dark"] .hero {
+    --hero-glow-left-bg: radial-gradient(circle at 30% 30%, rgba(124, 247, 210, 0.35), transparent 48%);
+    --hero-glow-right-bg: radial-gradient(circle at 70% 10%, rgba(108, 186, 255, 0.3), transparent 52%);
+}
+
+.hero {
     position: relative;
     overflow: hidden;
     padding: 5rem 1.5rem clamp(3rem, 6vw, 4.5rem);
@@ -18,7 +28,7 @@
 .hero-glow-left {
     width: 520px;
     height: 520px;
-    background: var(--hero-glow-left);
+    background: var(--hero-glow-left-bg);
     top: -140px;
     left: -120px;
 }
@@ -26,7 +36,7 @@
 .hero-glow-right {
     width: 520px;
     height: 520px;
-    background: var(--hero-glow-right);
+    background: var(--hero-glow-right-bg);
     top: -100px;
     right: -180px;
 }
