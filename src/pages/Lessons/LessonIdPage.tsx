@@ -17,7 +17,7 @@ export default function LessonIdPage() {
   const id = locationState?.id ?? paramId;
   const title = locationState?.title ?? 'Loading...';
 
-  const editorStatePromise = useMemo(() => Promise.resolve(undefined), []);
+  const editorStatePromise = useMemo(() => Promise.resolve(undefined), [id]);
 
   return (
     <div className='lesson-id-page'>
