@@ -1,0 +1,28 @@
+.lesson-id-page {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 1000px);
+  margin: 0 auto;
+
+  .lesson-page-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .lesson-name {
+    color: var(--app-text);
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 1.08;
+    padding: 0.35rem 0;
+
+    &.editable {
+      border-bottom: 2px solid var(--app-primary);
+      outline: none;
+    }
+  }
+}
